@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SORTEO.AR — Premio Millonario Garantizado</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050308;--bg2:#0a0612;--bg3:#0f0820;
+  --surface:rgba(255,255,255,0.028);--surface2:rgba(255,255,255,0.05);--surface3:rgba(255,255,255,0.08);
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);--border3:rgba(255,255,255,0.18);
+  --gold:#F0C040;--gold2:#FFE089;--gold3:#B8860B;--gold4:rgba(240,192,64,0.08);
+  --emerald:#00D97E;--emerald2:#4DFFA6;--emerald3:rgba(0,217,126,0.08);
+  --text:#FAF7FF;--text2:rgba(250,247,255,0.6);--text3:rgba(250,247,255,0.32);--text4:rgba(250,247,255,0.15);
+  --purple:#8B5CF6;--purple2:#C4B5FD;--purple3:rgba(139,92,246,0.12);
+  --red:#FF2D55;--red2:rgba(255,45,85,0.12);
+  --blue:#3B9EFF;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
+
+/* AURORA */
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aurora-blob{position:absolute;border-radius:50%;filter:blur(120px);animation:drift 24s ease-in-out infinite}
+.aurora-blob:nth-child(1){width:800px;height:700px;top:-250px;left:-200px;background:radial-gradient(circle,rgba(139,92,246,0.12) 0%,transparent 70%)}
+.aurora-blob:nth-child(2){width:600px;height:600px;top:25%;right:-250px;background:radial-gradient(circle,rgba(240,192,64,0.08) 0%,transparent 70%);animation-delay:-9s}
+.aurora-blob:nth-child(3){width:500px;height:450px;bottom:-100px;left:15%;background:radial-gradient(circle,rgba(0,217,126,0.06) 0%,transparent 70%);animation-delay:-18s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(50px,-40px) scale(1.05)}66%{transform:translate(-40px,50px) scale(.96)}}
+
+.wrap{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:0 20px 120px}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:24px 0 0;flex-wrap:wrap;gap:12px}
+.topbar-brand{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;display:flex;align-items:center;gap:6px}
+.topbar-brand em{color:var(--gold);font-style:normal}
+.topbar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:6px 13px;letter-spacing:.5px}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--emerald);animation:blink 2s ease-in-out infinite;flex-shrink:0}
+.chip-ssl{background:rgba(59,158,255,0.08);border-color:rgba(59,158,255,0.2);color:var(--blue)}
+.chip-ssl svg{color:var(--blue)}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,217,126,0)}50%{opacity:.6;box-shadow:0 0 0 4px rgba(0,217,126,.2)}}
+
+/* URGENCY BANNER */
+.urgency-banner{background:linear-gradient(135deg,rgba(255,45,85,.1),rgba(255,77,28,.06));border:1px solid rgba(255,45,85,.22);border-radius:16px;padding:14px 22px;margin:22px 0 0;display:flex;align-items:center;justify-content:center;gap:14px;animation:bpulse 3s ease-in-out infinite;flex-wrap:wrap}
+@keyframes bpulse{0%,100%{border-color:rgba(255,45,85,.22)}50%{border-color:rgba(255,45,85,.45);box-shadow:0 0 24px rgba(255,45,85,.07)}}
+.urgency-icon{font-size:22px;animation:shake 2.5s ease-in-out infinite}
+@keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-14deg)}40%{transform:rotate(14deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(8deg)}}
+.urgency-text{font-size:13px;font-weight:700;color:var(--red)}
+.urgency-text span{color:var(--text);font-weight:500}
+.avail-badge{background:var(--red);color:#fff;font-size:11px;font-weight:900;letter-spacing:1px;border-radius:100px;padding:5px 14px;animation:abounce 1.5s ease-in-out infinite}
+@keyframes abounce{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+
+/* HERO */
+.hero{padding:60px 0 48px;text-align:center}
+.hero-label{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(240,192,64,.22);background:rgba(240,192,64,.05);border-radius:100px;padding:7px 22px;font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:26px}
+.label-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:blink 1.5s ease-in-out infinite}
+.hero-eyebrow{font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,3.5vw,26px);letter-spacing:10px;color:var(--text3);margin-bottom:0}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,16vw,152px);line-height:.82;margin-bottom:6px}
+.hero-title .l1{display:block;color:var(--text)}
+.hero-title .l2{display:block;background:linear-gradient(135deg,var(--gold3) 0%,var(--gold) 35%,var(--gold2) 65%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 100%;animation:gshine 4s linear infinite,gpulse 5s ease-in-out infinite}
+@keyframes gshine{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes gpulse{0%,100%{filter:drop-shadow(0 0 28px rgba(240,192,64,.3))}50%{filter:drop-shadow(0 0 65px rgba(240,192,64,.65))}}
+.hero-sub{font-size:14px;color:var(--text2);margin:20px 0 36px;line-height:1.8}
+.hero-sub strong{color:var(--text);font-weight:700}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:520px;margin:0 auto}
+.stat-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:20px 12px;text-align:center;position:relative;overflow:hidden;transition:border-color .3s}
+.stat-box::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(240,192,64,.05),transparent 60%)}
+.stat-box:hover{border-color:var(--border2)}
+.sv{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1}
+.sv.green{color:var(--emerald);text-shadow:0 0 22px rgba(0,217,126,.45)}
+.sv.gold{color:var(--gold);text-shadow:0 0 22px rgba(240,192,64,.45)}
+.sv.acc{color:var(--purple2);text-shadow:0 0 18px rgba(196,181,253,.3)}
+.sl{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-top:3px}
+
+/* TESTIMONIOS RÁPIDOS */
+.testi-row{display:flex;gap:10px;margin:22px 0;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.testi-row::-webkit-scrollbar{display:none}
+.testi-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 18px;flex-shrink:0;min-width:220px;max-width:260px}
+.testi-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.testi-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
+.testi-name{font-size:12px;font-weight:700}
+.testi-loc{font-size:10px;color:var(--text3)}
+.testi-stars{color:var(--gold);font-size:11px;letter-spacing:1px}
+.testi-text{font-size:11px;color:var(--text2);line-height:1.6;font-style:italic}
+.testi-date{font-size:9px;color:var(--text3);margin-top:6px;font-weight:600}
+
+/* SCARCITY */
+.scarcity-block{background:linear-gradient(135deg,rgba(255,45,85,.06),rgba(255,77,28,.03));border:1px solid rgba(255,45,85,.16);border-radius:22px;padding:22px 26px;margin:22px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.sc-left{display:flex;align-items:center;gap:14px}
+.sc-icon{width:52px;height:52px;border-radius:14px;background:rgba(255,45,85,.1);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;animation:ipulse 2s ease-in-out infinite}
+@keyframes ipulse{0%,100%{box-shadow:0 0 0 0 rgba(255,45,85,0)}50%{box-shadow:0 0 0 7px rgba(255,45,85,.09)}}
+.sc-title{font-size:16px;font-weight:800;margin-bottom:3px}
+.sc-sub{font-size:12px;color:var(--text2);line-height:1.5}
+.sc-right{text-align:right;flex-shrink:0}
+.sc-num{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--red);line-height:1;text-shadow:0 0 32px rgba(255,45,85,.38)}
+.sc-lbl{font-size:10px;font-weight:800;color:var(--red);letter-spacing:1.5px;text-transform:uppercase;opacity:.8}
+
+/* BARRA PROGRESO */
+.prog-section{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:24px 28px;margin-bottom:20px}
+.prog-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.prog-title{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text2)}
+.prog-pct{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold)}
+.prog-track{background:rgba(255,255,255,.04);border-radius:100px;height:14px;overflow:visible;position:relative}
+.prog-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--purple),var(--gold));transition:width .9s cubic-bezier(.34,1.56,.64,1);position:relative;box-shadow:0 0 18px rgba(240,192,64,.28)}
+.prog-fill::after{content:'';position:absolute;right:-2px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:var(--gold);border:3px solid var(--bg);box-shadow:0 0 18px var(--gold);animation:ppulse 2s ease-in-out infinite}
+@keyframes ppulse{0%,100%{box-shadow:0 0 12px var(--gold)}50%{box-shadow:0 0 28px var(--gold),0 0 55px rgba(240,192,64,.28)}}
+.prog-lbls{display:flex;justify-content:space-between;margin-top:12px;font-size:10px;font-weight:700;color:var(--text3)}
+
+/* LIVE */
+.live-bar{background:var(--emerald3);border:1px solid rgba(0,217,126,.14);border-radius:14px;padding:12px 20px;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.live-dot{width:9px;height:9px;border-radius:50%;background:var(--emerald);flex-shrink:0;animation:blink 1.4s ease-in-out infinite}
+.live-text{font-size:12px;font-weight:600;color:var(--text2)}
+.live-text strong{color:var(--emerald)}
+
+/* TRUST STRIP */
+.trust-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px}
+.trust-item{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:18px 10px;text-align:center;transition:border-color .3s,transform .3s,box-shadow .3s;cursor:default}
+.trust-item:hover{border-color:rgba(240,192,64,.2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.ti-ico{font-size:26px;margin-bottom:8px}
+.ti-t{font-size:11px;font-weight:800;margin-bottom:3px}
+.ti-d{font-size:10px;color:var(--text3);line-height:1.4}
+
+/* GANADORES RECIENTES BANNER */
+.recent-winner-bar{background:linear-gradient(135deg,rgba(240,192,64,.07),rgba(0,217,126,.04));border:1px solid rgba(240,192,64,.14);border-radius:14px;padding:13px 20px;margin-bottom:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.rw-icon{font-size:20px;animation:tbob 2s ease-in-out infinite}
+@keyframes tbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.rw-text{font-size:12px;color:var(--text2);flex:1}
+.rw-text strong{color:var(--gold)}
+.rw-prize{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--emerald);text-shadow:0 0 12px rgba(0,217,126,.3)}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:26px;padding:28px;margin-bottom:16px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent)}
+.card-title{font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:22px;display:flex;align-items:center;gap:12px}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* PRICING */
+.pricing-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.price-opt{background:var(--surface2);border:1.5px solid var(--border);border-radius:22px;padding:26px 16px;text-align:center;position:relative;overflow:hidden;transition:all .25s;cursor:pointer}
+.price-opt::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(139,92,246,.12),transparent 70%);opacity:0;transition:opacity .3s}
+.price-opt:hover{border-color:var(--border3);transform:translateY(-2px)}
+.price-opt.sel{border-color:var(--purple2);box-shadow:0 0 28px rgba(139,92,246,.14)}
+.price-opt.sel::after{opacity:1}
+.price-opt.top-deal.sel{border-color:var(--emerald);box-shadow:0 0 28px rgba(0,217,126,.14)}
+.top-tag{position:absolute;top:0;right:0;background:var(--emerald);color:#001a0f;font-size:8px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:0 20px 0 12px}
+.pn{font-family:'Bebas Neue',sans-serif;font-size:64px;line-height:1}
+.ps{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin:2px 0 16px}
+.pm{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--gold);line-height:1}
+.pe{font-size:10px;color:var(--text3);margin-top:5px;line-height:1.4}
+.price-hint{text-align:center;margin-top:16px;font-size:12px;font-weight:600;color:var(--text3)}
+
+/* GRID 300 */
+.grid-controls{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.legend{display:flex;gap:16px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;color:var(--text3)}
+.leg-sq{width:12px;height:12px;border-radius:4px}
+.leg-sq.free{background:var(--surface2);border:1px solid var(--border2)}
+.leg-sq.sold{background:rgba(139,92,246,.2);border:1px solid rgba(139,92,246,.32)}
+.leg-sq.mine{background:var(--gold)}
+.search-num{background:var(--surface2);border:1px solid var(--border2);border-radius:100px;padding:9px 18px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;outline:none;width:160px;transition:border-color .2s,box-shadow .2s}
+.search-num:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,192,64,.08)}
+.search-num::placeholder{color:var(--text3)}
+.num-grid{display:grid;grid-template-columns:repeat(15,1fr);gap:4px;margin-bottom:16px}
+.nb{aspect-ratio:1;border:1px solid var(--border);border-radius:6px;font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;cursor:pointer;background:var(--surface2);color:var(--text3);transition:all .12s;display:flex;align-items:center;justify-content:center;user-select:none;line-height:1}
+.nb:hover:not(.sold){border-color:var(--gold);color:var(--gold);transform:scale(1.2);position:relative;z-index:2;box-shadow:0 0 14px rgba(240,192,64,.28);background:rgba(240,192,64,.07)}
+.nb.sold{background:rgba(139,92,246,.08);color:rgba(139,92,246,.45);border-color:rgba(139,92,246,.15);cursor:not-allowed}
+.nb.sel{background:var(--gold);color:#1a0800;border-color:var(--gold);transform:scale(1.12);font-weight:700;box-shadow:0 0 16px rgba(240,192,64,.42)}
+.nb.hi{box-shadow:0 0 0 2px var(--gold),0 0 16px rgba(240,192,64,.4)!important}
+.nb.win-anim{animation:wflash .3s ease-in-out infinite alternate}
+@keyframes wflash{from{background:var(--purple);transform:scale(1.12)}to{background:var(--gold);transform:scale(1.45);box-shadow:0 0 35px var(--gold)}}
+.sel-hint{display:flex;align-items:center;justify-content:center;gap:10px;padding:9px;font-size:12px;font-weight:600;color:var(--text3);transition:color .3s}
+
+/* FORM */
+.form-grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.form-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.fg{display:flex;flex-direction:column;gap:6px}
+.fl{font-size:9px;font-weight:800;color:var(--text3);letter-spacing:2px;text-transform:uppercase}
+.fc{background:var(--surface2);border:1px solid var(--border2);border-radius:11px;padding:13px 15px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;appearance:none}
+.fc:focus{border-color:var(--purple2);box-shadow:0 0 0 3px rgba(139,92,246,.1);background:rgba(255,255,255,.04)}
+.fc::placeholder{color:var(--text3)}
+.fc option{background:#0a0612}
+textarea.fc{resize:vertical;min-height:80px}
+.order-box{background:var(--gold4);border:1px solid rgba(240,192,64,.14);border-radius:18px;padding:20px;margin:16px 0;display:none;animation:slide-in .3s ease}
+.order-box.show{display:block}
+@keyframes slide-in{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.or{display:flex;justify-content:space-between;font-size:13px;color:var(--text2);margin-bottom:9px}
+.or.tot{font-size:18px;font-weight:900;color:var(--text);border-top:1px solid var(--border);padding-top:14px;margin:10px 0 0}
+.or.tot span:last-child{color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:26px}
+.alert{border-radius:13px;padding:14px 17px;font-size:13px;font-weight:600;margin-bottom:14px;display:none;animation:slide-in .3s ease}
+.alert.ok{background:var(--emerald3);border:1px solid rgba(0,217,126,.22);color:var(--emerald2);display:block}
+.alert.err{background:var(--red2);border:1px solid rgba(255,45,85,.22);color:#FF6B8A;display:block}
+
+/* BTN PRINCIPAL */
+.btn-main{width:100%;padding:21px;border:none;border-radius:16px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:900;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;background:linear-gradient(135deg,#6B2FF0,#8B4FF5,#6B2FF0);background-size:200% 100%;animation:bshift 3s ease-in-out infinite;letter-spacing:.5px}
+.btn-main::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.13),transparent);animation:bshine 2.5s ease-in-out infinite}
+@keyframes bshift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes bshine{0%{left:-100%}60%,100%{left:100%}}
+.btn-main:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 16px 45px rgba(107,47,240,.42)}
+.btn-main:disabled{opacity:.22;cursor:not-allowed;animation:none}
+.btn-main:disabled::before{animation:none}
+.btn-main span{position:relative;color:#fff;display:flex;align-items:center;justify-content:center;gap:9px}
+.btn-wrap{position:relative}
+.btn-ring{position:absolute;inset:-5px;border-radius:20px;border:2px solid rgba(139,92,246,.38);opacity:0;pointer-events:none;animation:rexpand 2s ease-in-out infinite}
+@keyframes rexpand{0%{opacity:0;transform:scale(.95)}30%{opacity:1}100%{opacity:0;transform:scale(1.06)}}
+.btn-wrap.active .btn-ring{opacity:1}
+
+/* GARANTIA */
+.garantia-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.garantia-item{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--text3)}
+.garantia-item svg{color:var(--emerald);flex-shrink:0}
+
+/* PARTICIPANTES */
+.part-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.part-cnt{background:var(--surface2);border:1px solid var(--border);border-radius:100px;padding:5px 16px;font-size:11px;font-weight:700;color:var(--text2)}
+.part-list{display:flex;flex-direction:column;gap:9px;max-height:360px;overflow-y:auto;padding-right:4px}
+.part-list::-webkit-scrollbar{width:3px}
+.part-list::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.part-item{display:grid;grid-template-columns:40px 1fr auto;align-items:start;gap:13px;background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:13px 15px;animation:slide-in .35s ease}
+.part-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple2));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;flex-shrink:0}
+.pname{font-size:13px;font-weight:700;margin-bottom:2px}
+.pmeta{font-size:10px;color:var(--text3);margin-bottom:4px}
+.pnums span{display:inline-block;background:var(--purple3);border:1px solid rgba(139,92,246,.2);border-radius:5px;padding:1px 7px;font-family:'Space Mono',monospace;font-size:9px;color:var(--purple2);margin:1px}
+.pright{text-align:right}
+.pprice{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);line-height:1.2}
+.ploc{font-size:9px;color:var(--text3);margin-top:2px;font-weight:700;text-transform:uppercase}
+.preview{grid-column:2/-1;font-size:11px;color:var(--text2);background:rgba(255,255,255,.02);border-radius:8px;padding:7px 11px;margin-top:4px;border-left:2px solid var(--border2);font-style:italic;display:none}
+.preview.show{display:block}
+
+/* GANADORES ANTERIORES */
+.wh-list{display:flex;flex-direction:column;gap:11px}
+.wcard{background:linear-gradient(135deg,rgba(240,192,64,.05),rgba(0,217,126,.03));border:1px solid rgba(240,192,64,.13);border-radius:18px;padding:18px 20px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:15px;animation:slide-in .4s ease}
+.wc-trophy{font-size:30px}
+.wc-num{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--gold);line-height:1}
+.wc-name{font-size:14px;font-weight:800;margin-bottom:2px}
+.wc-detail{font-size:11px;color:var(--text3)}
+.wc-right{text-align:right}
+.wc-prize{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--emerald);text-shadow:0 0 16px rgba(0,217,126,.3)}
+.wstatus{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;border-radius:100px;padding:3px 11px;margin-top:4px}
+.wstatus.ok{background:rgba(0,217,126,.1);border:1px solid rgba(0,217,126,.22);color:var(--emerald2)}
+.wstatus.pend{background:rgba(240,192,64,.1);border:1px solid rgba(240,192,64,.22);color:var(--gold)}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:10px}
+.faq-item{background:var(--surface2);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color .25s}
+.faq-item.open{border-color:var(--border2)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;cursor:pointer;font-size:14px;font-weight:700;gap:12px;transition:color .2s;user-select:none}
+.faq-q:hover{color:var(--gold)}
+.faq-q .faq-icon{font-size:18px;transition:transform .3s;flex-shrink:0;color:var(--text3)}
+.faq-item.open .faq-icon{transform:rotate(45deg);color:var(--gold)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s}
+.faq-item.open .faq-a{max-height:300px;padding:0 20px 18px}
+.faq-a-text{font-size:13px;color:var(--text2);line-height:1.8}
+.faq-a-text strong{color:var(--emerald)}
+.faq-a-text a{color:var(--gold);text-decoration:none}
+
+/* CÓMO FUNCIONA */
+.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.step-box{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:22px 16px;text-align:center;position:relative;overflow:hidden}
+.step-box::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(139,92,246,.06),transparent 65%)}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--purple2);opacity:.4;line-height:1;margin-bottom:8px}
+.step-ico{font-size:28px;margin-bottom:10px;display:block}
+.step-title{font-size:13px;font-weight:800;margin-bottom:5px}
+.step-desc{font-size:11px;color:var(--text3);line-height:1.6}
+.step-arrow{display:none}
+
+/* MEDIOS DE PAGO */
+.pagos-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.pago-chip{display:flex;align-items:center;gap:7px;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:9px 14px;font-size:12px;font-weight:700;color:var(--text2)}
+.pago-ico{font-size:18px}
+
+/* MODALS */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(3,1,8,.94);backdrop-filter:blur(12px);z-index:500;align-items:center;justify-content:center;flex-direction:column}
+.modal-bg.show{display:flex}
+
+/* DRAW MODAL */
+.draw-modal{background:var(--bg2);border:1px solid rgba(240,192,64,.18);border-radius:30px;padding:52px 46px;text-align:center;max-width:480px;width:92%;animation:pop-up .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop-up{from{opacity:0;transform:scale(.65)}to{opacity:1;transform:scale(1)}}
+.dm-ey{font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.dm-title{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--gold);margin-bottom:10px;letter-spacing:2px;line-height:1}
+.dm-sub{font-size:13px;color:var(--text2);margin-bottom:38px;line-height:1.7}
+.drum-wrap{position:relative;width:160px;height:160px;margin:0 auto 28px}
+.drum-ring{position:absolute;inset:-10px;border-radius:50%;border:2px solid transparent;background:linear-gradient(var(--bg2),var(--bg2)) padding-box,linear-gradient(135deg,var(--gold3),var(--gold),var(--gold2)) border-box;animation:rspin 3s linear infinite}
+@keyframes rspin{to{transform:rotate(360deg)}}
+.drum{width:160px;height:160px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:46px;color:var(--gold)}
+.drum.spinning{animation:dshake .09s linear infinite}
+@keyframes dshake{0%{transform:scale(1) rotate(-1deg)}50%{transform:scale(1.07) rotate(1deg)}100%{transform:scale(1) rotate(-1deg)}}
+.draw-progress{font-size:12px;color:var(--text3);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;min-height:20px}
+
+/* WINNER MODAL */
+.winner-modal{background:var(--bg2);border:1px solid rgba(240,192,64,.28);border-radius:30px;padding:48px 44px;text-align:center;max-width:540px;width:92%;animation:pop-up .6s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto}
+.winner-modal::-webkit-scrollbar{width:0}
+.wm-trophy{font-size:70px;display:block;margin-bottom:6px;animation:tbob 1.2s ease-in-out infinite}
+@keyframes tbob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+.wm-ey{font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:9px}
+.wm-num{font-family:'Bebas Neue',sans-serif;font-size:108px;line-height:.88;background:linear-gradient(135deg,var(--gold3),var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px}
+.wm-name{font-size:26px;font-weight:900;margin-bottom:4px}
+.wm-loc{font-size:13px;color:var(--text3);margin-bottom:18px}
+.wm-prize{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--emerald);text-shadow:0 0 32px rgba(0,217,126,.4);line-height:1}
+.wm-plbl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-top:5px}
+.wm-div{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:22px auto}
+/* SECRET CODE */
+.secret-section{background:var(--purple3);border:1px solid rgba(139,92,246,.22);border-radius:18px;padding:22px;margin-top:22px;text-align:left}
+.secret-title{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--purple2);margin-bottom:7px;display:flex;align-items:center;gap:7px}
+.secret-desc{font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.7}
+.secret-input-row{display:flex;gap:9px}
+.secret-input{flex:1;background:rgba(0,0,0,.3);border:1.5px solid rgba(139,92,246,.35);border-radius:11px;padding:13px 14px;font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--text);outline:none;text-transform:uppercase;letter-spacing:5px;text-align:center;transition:border-color .2s,box-shadow .2s}
+.secret-input:focus{border-color:var(--purple2);box-shadow:0 0 0 3px rgba(139,92,246,.18)}
+.secret-input::placeholder{color:var(--text4);letter-spacing:2px;font-size:11px}
+.btn-secret{padding:13px 20px;background:linear-gradient(135deg,var(--purple),#A78BFA);border:none;border-radius:11px;color:#fff;font-family:'Outfit',sans-serif;font-size:13px;font-weight:900;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-secret:hover{transform:scale(1.04);box-shadow:0 8px 26px rgba(139,92,246,.38)}
+.secret-error{font-size:11px;font-weight:800;color:var(--red);margin-top:9px;display:none;animation:slide-in .2s ease}
+.secret-error.show{display:block}
+.secret-hint{font-size:10px;color:var(--text3);margin-top:10px;line-height:1.6}
+/* ADMIN CODE — OCULTAR EN PRODUCCIÓN */
+.admin-code-box{background:rgba(0,217,126,.04);border:1px solid rgba(0,217,126,.18);border-radius:12px;padding:14px 18px;margin-top:16px}
+.admin-code-label{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--emerald);margin-bottom:7px}
+.admin-code-value{font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:var(--emerald2);letter-spacing:7px}
+.admin-code-note{font-size:9px;color:var(--text3);margin-top:6px;line-height:1.5}
+
+/* NEXT OVERLAY */
+.next-overlay{background:rgba(5,3,8,.98);border:1px solid rgba(139,92,246,.2);border-radius:30px;padding:54px 46px;text-align:center;max-width:500px;width:92%;animation:pop-up .5s ease}
+.no-title{font-family:'Bebas Neue',sans-serif;font-size:46px;color:var(--purple2);margin-bottom:14px;letter-spacing:2px}
+.no-sub{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:34px}
+.no-timer{font-family:'Bebas Neue',sans-serif;font-size:88px;color:var(--gold);line-height:1;text-shadow:0 0 45px rgba(240,192,64,.38)}
+.no-tlbl{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-top:5px}
+.no-bar-wrap{background:rgba(255,255,255,.04);border-radius:100px;height:7px;margin-top:26px;overflow:hidden}
+.no-bar{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));border-radius:100px;transition:width .5s linear}
+
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:rgba(5,3,8,.98);z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+.loading-overlay.hidden{display:none}
+.spinner{width:64px;height:64px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-title{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--gold);letter-spacing:4px}
+.loading-sub{font-size:12px;color:var(--text3);text-align:center;max-width:300px;line-height:1.8}
+.loading-steps{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.ls{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:8px;opacity:.4;transition:opacity .4s,color .4s}
+.ls.active{opacity:1;color:var(--text2)}
+.ls.done{opacity:.7;color:var(--emerald)}
+.ls-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
+
+/* WHATSAPP FLOTANTE */
+.wa-fab{position:fixed;bottom:28px;right:24px;z-index:400;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#25D366,#128C7E);border:none;border-radius:100px;padding:14px 22px 14px 18px;cursor:pointer;box-shadow:0 8px 32px rgba(37,211,102,.45);animation:wapulse 2.5s ease-in-out infinite;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.wa-fab:hover{transform:translateY(-4px) scale(1.04);box-shadow:0 16px 45px rgba(37,211,102,.55);animation:none}
+@keyframes wapulse{0%,100%{box-shadow:0 8px 32px rgba(37,211,102,.45)}50%{box-shadow:0 8px 42px rgba(37,211,102,.7),0 0 0 8px rgba(37,211,102,.1)}}
+.wa-fab svg{width:26px;height:26px;flex-shrink:0}
+.wa-fab-text{display:flex;flex-direction:column;align-items:flex-start}
+.wa-fab-main{font-size:13px;font-weight:900;color:#fff;letter-spacing:.3px;line-height:1.2}
+.wa-fab-sub{font-size:10px;color:rgba(255,255,255,.8);font-weight:600;line-height:1.2}
+.wa-fab-badge{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;font-size:9px;font-weight:900;border-radius:100px;padding:3px 8px;letter-spacing:.5px;animation:abounce 1.5s ease-in-out infinite;border:2px solid var(--bg)}
+
+/* COUNTDOWN 3s */
+.countdown-box{background:var(--bg2);border:2px solid rgba(240,192,64,.4);border-radius:30px;padding:60px 60px;text-align:center;max-width:420px;width:92%;animation:pop-up .4s cubic-bezier(.34,1.56,.64,1)}
+.cd-title{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--gold);letter-spacing:3px;margin-bottom:10px}
+.cd-sub{font-size:14px;color:var(--text2);margin-bottom:20px}
+.cd-num{font-family:'Bebas Neue',sans-serif;font-size:140px;line-height:1;color:var(--gold);text-shadow:0 0 60px rgba(240,192,64,.6);animation:cdpop 1s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cdpop{from{transform:scale(1.8);opacity:0}to{transform:scale(1);opacity:1}}
+.cd-lbl{font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-top:8px}
+
+#ccanvas{position:fixed;inset:0;pointer-events:none;z-index:999}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .hero-title{letter-spacing:0}
+  .trust-strip{grid-template-columns:repeat(2,1fr)}
+  .pricing-row{grid-template-columns:1fr 1fr}
+  .form-grid2,.form-grid3{grid-template-columns:1fr}
+  .num-grid{grid-template-columns:repeat(10,1fr);gap:3px}
+  .nb{font-size:7px;border-radius:5px}
+  .draw-modal,.winner-modal,.next-overlay{padding:34px 22px}
+  .wm-num{font-size:82px}
+  .scarcity-block{flex-direction:column;text-align:center}
+  .urgency-banner{justify-content:center}
+  .wcard{grid-template-columns:auto 1fr}
+  .secret-input-row{flex-direction:column}
+  .steps-row{grid-template-columns:repeat(2,1fr)}
+  .testi-row{gap:8px}
+}
+@media(max-width:480px){
+  .pricing-row{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="aurora"><div class="aurora-blob"></div><div class="aurora-blob"></div><div class="aurora-blob"></div></div>
+<canvas id="ccanvas"></canvas>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-title">Preparando sorteo</div>
+  <div class="loading-sub">Configurando el sorteo con participantes verificados. Toma solo un momento...</div>
+  <div class="loading-steps">
+    <div class="ls" id="ls1"><div class="ls-dot"></div>Generando números aleatorios</div>
+    <div class="ls" id="ls2"><div class="ls-dot"></div>Cargando participantes</div>
+    <div class="ls" id="ls3"><div class="ls-dot"></div>Configurando premio del sorteo</div>
+    <div class="ls" id="ls4"><div class="ls-dot"></div>Todo listo</div>
+  </div>
+</div>
+
+<!-- DRAW MODAL — AUTOMÁTICO -->
+<div class="modal-bg" id="drawModal">
+  <div class="draw-modal">
+    <div class="dm-ey">¡Todos los números vendidos!</div>
+    <div class="dm-title">SORTEANDO</div>
+    <div class="dm-sub">El sistema está seleccionando el número ganador de forma automática e imparcial.</div>
+    <div class="drum-wrap"><div class="drum-ring"></div><div class="drum" id="drum">?</div></div>
+    <div class="draw-progress" id="drawProgress">Iniciando sorteo...</div>
+  </div>
+</div>
+
+<!-- COUNTDOWN 3s ANTES DEL SORTEO -->
+<div class="modal-bg" id="countdownOverlay">
+  <div class="countdown-box">
+    <div class="cd-title">¡COMENZANDO EL SORTEO!</div>
+    <div class="cd-sub">El ganador será revelado en</div>
+    <div class="cd-num" id="countdownNum">3</div>
+    <div class="cd-lbl">segundos</div>
+  </div>
+</div>
+
+<!-- WINNER MODAL -->
+<div class="modal-bg" id="winModal">
+  <div class="winner-modal">
+    <span class="wm-trophy">🏆</span>
+    <div class="wm-ey">Número ganador del sorteo</div>
+    <div class="wm-num" id="wNum">—</div>
+    <div class="wm-name" id="wName">—</div>
+    <div class="wm-loc" id="wLoc">—</div>
+    <div class="wm-div"></div>
+    <div class="wm-prize" id="wPrize">$1.000.000</div>
+    <div class="wm-plbl">Pesos Argentinos · Premio Mayor Garantizado</div>
+    <div class="secret-section">
+      <div class="secret-title">🔐 Confirmación por WhatsApp</div>
+      <div class="secret-desc">
+        El ganador recibe un <strong>código secreto único</strong> enviado a su WhatsApp registrado.
+        Ingresalo para confirmar la recepción del premio. El próximo sorteo comenzará solo después de esta confirmación.
+      </div>
+      <div class="secret-input-row">
+        <input class="secret-input" id="secretInput" type="text" maxlength="8" placeholder="XXXXXXXX" autocomplete="off" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')">
+        <button class="btn-secret" onclick="verifySecretCode()">✅ Verificar</button>
+      </div>
+      <div class="secret-error" id="secretError">❌ Código incorrecto. Revisá el WhatsApp.</div>
+      <div class="secret-hint">💬 Código enviado al WhatsApp registrado · 8 caracteres · solo letras y números</div>
+      <div class="admin-code-box" id="adminCodeBox">
+        <div class="admin-code-label">🔑 Código secreto (admin — ocultar en producción)</div>
+        <div class="admin-code-value" id="adminCodeDisplay">—</div>
+        <div class="admin-code-note">Enviá este código al ganador por WhatsApp. Remover este bloque antes de publicar.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEXT SORTEO MODAL -->
+<div class="modal-bg" id="nextModal">
+  <div class="next-overlay">
+    <div style="font-size:52px;margin-bottom:18px">🎊</div>
+    <div class="no-title">PREPARANDO EL SIGUIENTE SORTEO</div>
+    <div class="no-sub">¡Premio confirmado con éxito! El próximo sorteo comienza en instantes. ¡No te lo pierdas!</div>
+    <div class="no-timer" id="nextTimer">30s</div>
+    <div class="no-tlbl">para el próximo sorteo</div>
+    <div class="no-bar-wrap"><div class="no-bar" id="nextBar" style="width:100%"></div></div>
+  </div>
+</div>
+
+<!-- WHATSAPP FLOTANTE -->
+<a class="wa-fab" id="waFab" href="#" data-wa="participar" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="currentColor" color="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.121 1.527 5.855L0 24l6.318-1.504A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.001-1.365l-.358-.212-3.75.893.927-3.643-.233-.374A9.818 9.818 0 1 1 12 21.818z"/></svg>
+  <div class="wa-fab-text">
+    <span class="wa-fab-main">Consultá por WhatsApp</span>
+    <span class="wa-fab-sub">Respuesta inmediata</span>
+  </div>
+  <div class="wa-fab-badge">ONLINE</div>
+</a>
+
+<div class="wrap">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-brand">SORTEO<em>.</em>AR</div>
+    <div class="topbar-right">
+      <div class="chip chip-ssl">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        SSL Seguro
+      </div>
+      <div class="chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Verificado</div>
+      <div class="chip"><div class="dot"></div>En vivo</div>
+    </div>
+  </div>
+
+  <!-- URGENCY -->
+  <div class="urgency-banner">
+    <span class="urgency-icon">🔥</span>
+    <div class="urgency-text">¡SE ESTÁN LLENANDO AHORA MISMO! <span>El sorteo arranca automáticamente cuando se completan los lugares</span></div>
+    <div class="avail-badge" id="ub-avail">— restantes</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label"><div class="label-dot"></div>🟢 Sorteo activo — Podés ganar HOY</div>
+    <div class="hero-eyebrow">GANATE HOY</div>
+    <div class="hero-title"><span class="l1">LLEVATE</span><span class="l2" id="heroPrize">$5.000.000</span></div>
+    <div class="hero-sub">
+      <strong id="hero-total-txt">Quedan pocos lugares</strong> — Sorteo automático · Un solo ganador garantizado<br>
+      ¿Esperás más? <strong>Cada minuto que pasa es un número menos disponible.</strong>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="sv green" id="s-avail">—</div><div class="sl">Disponibles</div></div>
+      <div class="stat-box"><div class="sv gold" id="s-sold">—</div><div class="sl">Vendidos</div></div>
+      <div class="stat-box"><div class="sv acc" id="s-pct">—</div><div class="sl">Completado</div></div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIOS -->
+  <div class="testi-row" id="testiRow">
+    <div class="testi-card">
+      <div class="testi-top"><div class="testi-av">VR</div><div><div class="testi-name">Valentina Ríos</div><div class="testi-loc">Córdoba Capital</div></div></div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"¡No lo podía creer! Me avisaron por WhatsApp y al ratito tenía el dinero. Todo muy serio."</div>
+      <div class="testi-date">Ganadora · Sorteo #48 · $2.100.000</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-top"><div class="testi-av">FM</div><div><div class="testi-name">Facundo Medina</div><div class="testi-loc">Rosario, Santa Fe</div></div></div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Participé tres veces, la segunda gané. El código llegó al toque y el premio también."</div>
+      <div class="testi-date">Ganador · Sorteo #35 · $3.500.000</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-top"><div class="testi-av">LC</div><div><div class="testi-name">Luciana Castro</div><div class="testi-loc">Mendoza Capital</div></div></div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Muy transparente todo. Ves la lista de participantes en tiempo real, da mucha confianza."</div>
+      <div class="testi-date">Participante verificada · Sorteo #52</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-top"><div class="testi-av">GA</div><div><div class="testi-name">Gonzalo Acosta</div><div class="testi-loc">San Miguel de Tucumán</div></div></div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Dudaba al principio pero el proceso es clarísimo. Recomiendo a todos participar."</div>
+      <div class="testi-date">Participante verificado · Sorteo #44</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-top"><div class="testi-av">MV</div><div><div class="testi-name">Micaela Vargas</div><div class="testi-loc">La Plata, Buenos Aires</div></div></div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Gané $4.000.000 y en menos de 24hs estaba el dinero en mi cuenta. Increíble."</div>
+      <div class="testi-date">Ganadora · Sorteo #41 · $4.000.000</div>
+    </div>
+  </div>
+
+  <!-- GANADOR RECIENTE -->
+  <div class="recent-winner-bar">
+    <div class="rw-icon">🏆</div>
+    <div class="rw-text">Último sorteo: <strong id="lastWinnerName">Cargando...</strong> de <strong id="lastWinnerLoc">Argentina</strong> ganó</div>
+    <div class="rw-prize" id="lastWinnerPrize">$2.800.000</div>
+  </div>
+
+  <!-- SCARCITY -->
+  <div class="scarcity-block">
+    <div class="sc-left">
+      <div class="sc-icon">⚡</div>
+      <div>
+        <div class="sc-title">¡Quedan muy pocos lugares!</div>
+        <div class="sc-sub">Cuando se completan, el sorteo arranca al instante.<br><strong style="color:var(--red)">No te quedes afuera — participá ahora.</strong></div>
+      </div>
+    </div>
+    <div class="sc-right"><div class="sc-num" id="sc-avail">—</div><div class="sc-lbl">lugares libres</div></div>
+  </div>
+
+  <!-- PROGRESO -->
+  <div class="prog-section">
+    <div class="prog-hdr"><div class="prog-title">Progreso del sorteo actual</div><div class="prog-pct" id="p-pct">—</div></div>
+    <div class="prog-track"><div class="prog-fill" id="p-fill" style="width:0%"></div></div>
+    <div class="prog-lbls"><span>0</span><span id="p-lbl">—</span><span id="p-max">300</span></div>
+  </div>
+
+  <!-- LIVE -->
+  <div class="live-bar">
+    <div class="live-dot"></div>
+    <div class="live-text"><strong id="live-cnt">+12 personas</strong> están viendo este sorteo ahora mismo</div>
+  </div>
+
+  <!-- TRUST -->
+  <div class="trust-strip">
+    <div class="trust-item"><div class="ti-ico">🔐</div><div class="ti-t">100% Seguro</div><div class="ti-d">Conexión cifrada SSL · Sin riesgos</div></div>
+    <div class="trust-item"><div class="ti-ico">👁️</div><div class="ti-t">Lista pública</div><div class="ti-d">Todos los participantes visibles</div></div>
+    <div class="trust-item"><div class="ti-ico">⚡</div><div class="ti-t">Automático</div><div class="ti-d">Sin intervención humana</div></div>
+    <div class="trust-item"><div class="ti-ico">🏆</div><div class="ti-t">Premio garantizado</div><div class="ti-d">+54 ganadores en 2025</div></div>
+  </div>
+
+  <!-- CÓMO FUNCIONA -->
+  <div class="card">
+    <div class="card-title">Cómo funciona en 4 pasos</div>
+    <div class="steps-row">
+      <div class="step-box">
+        <div class="step-num">01</div>
+        <span class="step-ico">🎯</span>
+        <div class="step-title">Elegí tu número</div>
+        <div class="step-desc">Seleccioná uno o más números libres de la grilla de 300.</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">02</div>
+        <span class="step-ico">📋</span>
+        <div class="step-title">Completá el registro</div>
+        <div class="step-desc">Tu nombre, WhatsApp y método de pago. Simple y rápido.</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">03</div>
+        <span class="step-ico">🎲</span>
+        <div class="step-title">Sorteo automático</div>
+        <div class="step-desc">Al venderse el último número, el sistema sortea al instante.</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">04</div>
+        <span class="step-ico">💰</span>
+        <div class="step-title">Recibís el premio</div>
+        <div class="step-desc">El ganador confirma con su código de WhatsApp y recibe el dinero.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRECIOS -->
+  <div class="card">
+    <div class="card-title">Precios por cantidad de números</div>
+    <div class="pricing-row">
+      <div class="price-opt" id="tier-1">
+        <div class="pn">1</div><div class="ps">número</div>
+        <div class="pm">$2.500</div><div class="pe">precio estándar</div>
+      </div>
+      <div class="price-opt" id="tier-3">
+        <div class="pn">3</div><div class="ps">números</div>
+        <div class="pm">$6.000</div><div class="pe">$2.000 c/u · ahorrás $1.500</div>
+      </div>
+      <div class="price-opt top-deal" id="tier-5">
+        <div class="top-tag">MEJOR PRECIO</div>
+        <div class="pn">5+</div><div class="ps">números</div>
+        <div class="pm">$1.400</div><div class="pe">c/u · máximo ahorro · más chances</div>
+      </div>
+    </div>
+    <div class="price-hint">✨ El precio se calcula automáticamente al seleccionar tus números</div>
+  </div>
+
+  <!-- GRILLA 300 NÚMEROS -->
+  <div class="card">
+    <div class="card-title">Elegí tus números · 300 disponibles</div>
+    <div class="grid-controls">
+      <div class="legend">
+        <div class="leg"><div class="leg-sq free"></div>Libre</div>
+        <div class="leg"><div class="leg-sq sold"></div>Vendido</div>
+        <div class="leg"><div class="leg-sq mine"></div>Elegido</div>
+      </div>
+      <input class="search-num" id="numSearch" type="number" min="1" max="300" placeholder="🔍 Buscar nº" oninput="searchNum(this.value)">
+    </div>
+    <div class="num-grid" id="numGrid"></div>
+    <div class="sel-hint" id="selHint">Tocá cualquier número libre para reservarlo</div>
+  </div>
+
+  <!-- BANNER PERSUASIVO -->
+  <div style="background:linear-gradient(135deg,rgba(240,192,64,.1),rgba(139,92,246,.08));border:1px solid rgba(240,192,64,.22);border-radius:20px;padding:22px 26px;margin-bottom:16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+    <div style="font-size:42px;flex-shrink:0">💰</div>
+    <div style="flex:1;min-width:200px">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--gold);letter-spacing:1px;line-height:1.1">¿Y SI HOY ES TU DÍA?</div>
+      <div style="font-size:13px;color:var(--text2);margin-top:4px;line-height:1.6">Cada sorteo tiene <strong style="color:var(--text)">un solo ganador</strong>. Con pocos lugares disponibles, tus chances nunca fueron tan altas. <strong style="color:var(--gold)">Registrate ahora y jugá hoy mismo.</strong></div>
+    </div>
+    <a href="#" data-wa="participar" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-size:13px;font-weight:900;padding:12px 22px;border-radius:12px;text-decoration:none;flex-shrink:0;display:flex;align-items:center;gap:8px;white-space:nowrap">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.121 1.527 5.855L0 24l6.318-1.504A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.001-1.365l-.358-.212-3.75.893.927-3.643-.233-.374A9.818 9.818 0 1 1 12 21.818z"/></svg>
+      Participar por WhatsApp
+    </a>
+  </div>
+
+  <!-- FORMULARIO -->
+  <div class="card">
+    <div class="card-title">Completá tu registro</div>
+    <div class="form-grid2">
+      <div class="fg"><label class="fl">Nombre</label><input class="fc" id="f-name" type="text" placeholder="Tu nombre" autocomplete="given-name"></div>
+      <div class="fg"><label class="fl">Apellido</label><input class="fc" id="f-last" type="text" placeholder="Tu apellido" autocomplete="family-name"></div>
+    </div>
+    <div class="form-grid3">
+      <div class="fg"><label class="fl">WhatsApp</label><input class="fc" id="f-phone" type="tel" placeholder="+54 9 ..." autocomplete="tel"></div>
+      <div class="fg"><label class="fl">Provincia</label>
+        <select class="fc" id="f-prov">
+          <option value="">Seleccionar...</option>
+          <option>Buenos Aires</option><option>CABA</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">Localidad</label><input class="fc" id="f-loc" type="text" placeholder="Tu ciudad"></div>
+    </div>
+    <div class="fg" style="margin-bottom:14px"><label class="fl">Método de pago</label>
+      <select class="fc" id="f-pay">
+        <option>Galio Pay</option>
+      </select>
+    </div>
+    <div class="fg" style="margin-bottom:16px"><label class="fl">Mensaje / Reseña (opcional)</label>
+      <textarea class="fc" id="f-review" placeholder="¿Algo que quieras decir? ¡Lo verán todos los participantes!"></textarea>
+    </div>
+    <!-- MEDIOS DE PAGO -->
+    <div class="pagos-row">
+      <div class="pago-chip"><span class="pago-ico">⚡</span>Galio Pay</div>
+      <div class="pago-chip"><span class="pago-ico">🏦</span>Transferencia validada</div>
+      <div class="pago-chip"><span class="pago-ico">🔒</span>Checkout seguro</div>
+    </div>
+    <div class="order-box" id="orderBox">
+      <div class="or"><span>Números elegidos</span><span id="o-nums" style="color:var(--text);font-size:12px;max-width:60%;text-align:right;font-weight:700"></span></div>
+      <div class="or"><span>Precio por número</span><span id="o-unit"></span></div>
+      <div class="or"><span>Cantidad</span><span id="o-qty"></span></div>
+      <div class="or tot"><span>TOTAL A PAGAR</span><span id="o-total"></span></div>
+    </div>
+    <div id="alertBox"></div>
+    <div class="btn-wrap" id="btnWrap" style="margin-top:16px">
+      <div class="btn-ring"></div>
+      <button class="btn-main" id="btnReg" disabled onclick="registerParticipant()">
+        <span id="btnRegTxt">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Seleccioná al menos 1 número para participar
+        </span>
+      </button>
+    </div>
+    <div style="text-align:center;margin-top:13px;font-size:12px;color:var(--text3)">
+      🔒 Tus datos están protegidos · 
+      <a href="#" data-wa="consulta" target="_blank" rel="noopener" style="color:var(--emerald);font-weight:700;text-decoration:none">¿Dudas? Consultanos por WhatsApp →</a>
+    </div>
+    <div class="garantia-row">
+      <div class="garantia-item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Datos protegidos</div>
+      <div class="garantia-item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Sin cargos ocultos</div>
+      <div class="garantia-item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Premio garantizado</div>
+    </div>
+  </div>
+
+  <!-- PARTICIPANTES -->
+  <div class="card">
+    <div class="part-hdr">
+      <div class="card-title" style="margin:0">Participantes en tiempo real</div>
+      <div class="part-cnt" id="partCnt">0 participantes</div>
+    </div>
+    <div class="part-list" id="partList"></div>
+  </div>
+
+  <!-- GANADORES ANTERIORES -->
+  <div class="card" id="historyCard" style="display:none">
+    <div class="card-title">Ganadores anteriores · Premio entregado</div>
+    <div class="wh-list" id="winnerHistory"></div>
+  </div>
+
+  <!-- PREGUNTAS FRECUENTES -->
+  <div class="card">
+    <div class="card-title">Preguntas frecuentes</div>
+    <div class="faq-list" id="faqList">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Cómo sé que el sorteo es legítimo y no me van a estafar?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><div class="faq-a-text">
+          El sorteo es <strong>100% transparente</strong>: podés ver en tiempo real a todos los participantes con sus nombres, provincias y números. El sorteo se realiza automáticamente sin intervención humana cuando se completan los 300 números, y el ganador recibe un código único por WhatsApp para confirmar su identidad. Llevamos <strong>más de 54 sorteos realizados en 2025</strong> con todos los premios entregados y verificados.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Cuánto vale cada número y cuánto puedo ganar?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><div class="faq-a-text">
+          El precio varía según la cantidad que compres: <strong>1 número = $2.500</strong>, <strong>3 números = $6.000</strong> ($2.000 c/u) y <strong>5 o más = $1.400 c/u</strong> (el mejor precio). El premio de cada sorteo es <strong>aleatorio entre $1.000.000 y $5.000.000</strong>, siempre en números redondos. El monto exacto del sorteo actual se muestra arriba en la página.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Cómo se realiza el sorteo? ¿Es realmente automático?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><div class="faq-a-text">
+          Sí, es <strong>100% automático</strong>. En el momento exacto en que se vende el último número de los 300, el sistema lanza el sorteo sin ningún botón ni intervención humana. Podés ver la animación del bombo en vivo. El número ganador es seleccionado por un algoritmo aleatorio verificado, y el resultado es inmediato y definitivo.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Cómo me entero si gané? ¿Cómo cobro el premio?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><div class="faq-a-text">
+          Si tu número resulta ganador, <strong>te contactamos directamente por WhatsApp</strong> al número que registraste. Te enviamos un código secreto único de 8 caracteres. Ingresás ese código en el sistema para confirmar tu identidad, y coordinamos el envío del premio por el método de tu preferencia (transferencia bancaria, Mercado Pago, etc.). <strong>En menos de 24 horas</strong> tenés el dinero.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Qué pasa si no tengo suerte y no gano?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><div class="faq-a-text">
+          Cada sorteo es independiente. Apenas termina uno, <strong>comienza el siguiente en segundos</strong>, con un nuevo premio aleatorio entre $1.000.000 y $5.000.000. Podés volver a participar tantas veces como quieras. Muchos participantes ganaron en su segundo o tercer intento. ¡Seguí intentando!
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Están seguros mis datos personales?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><div class="faq-a-text">
+          Sí. La conexión usa <strong>SSL cifrado</strong> (el candado verde en tu navegador). Solo usamos tu nombre y WhatsApp para contactarte si ganás. No vendemos, compartimos ni usamos tus datos para ningún otro fin. Podés participar con total tranquilidad.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Puedo comprar más de un número para tener más chances?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><div class="faq-a-text">
+          ¡Sí! Podés elegir hasta <strong>todos los números que quieras</strong> de los disponibles. Además, comprando 5 o más números obtenés el precio más bajo ($1.400 c/u), así aumentás tus probabilidades de ganar gastando menos por número. Es la opción más inteligente.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Qué métodos de pago aceptan?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a"><div class="faq-a-text">
+          Aceptamos <strong>Transferencia bancaria</strong>, <strong>Mercado Pago</strong> y <strong>Efectivo</strong>. Al completar tu registro, elegís el método que prefieras y coordinamos el pago por WhatsApp antes de confirmar tu participación. El número queda reservado a tu nombre desde el momento del registro.
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER TRUST -->
+  <div style="text-align:center;padding:32px 0;border-top:1px solid var(--border);margin-top:8px">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:4px;margin-bottom:10px">SORTEO<em style="color:var(--gold);font-style:normal">.</em>AR</div>
+    <div style="font-size:12px;color:var(--text3);line-height:2;max-width:480px;margin:0 auto">
+      Sorteo legal · SSL cifrado · +54 premios entregados en 2025<br>
+      Consultas por WhatsApp · Transparencia total · Argentina
+    </div>
+  </div>
+</div>
+
+<script type="text/plain" id="legacy-app-script">
+// ═══════════════════════════════════════════
+//  STORAGE — window.storage (Claude) o localStorage
+// ═══════════════════════════════════════════
+// ══════════════════════════════════════════
+//  CONFIGURACIÓN — cambiá tu número de WhatsApp aquí
+// ══════════════════════════════════════════
+const WA_NUMBER = '5493516000000'; // ← reemplazá con tu número (cód.país + cód.área + número)
+const WA_MSG_CONSULTA = encodeURIComponent('Hola, tengo una consulta sobre el sorteo 🎟️');
+const WA_MSG_PARTICIPAR = encodeURIComponent('Hola, quiero participar en el sorteo 🎟️');
+
+// Asignar links de WA al cargar
+window.addEventListener('DOMContentLoaded', ()=>{
+  const waUrl = n => `https://wa.me/${WA_NUMBER}?text=${n}`;
+  document.querySelectorAll('[data-wa]').forEach(el=>{
+    const msg = el.dataset.wa === 'participar' ? WA_MSG_PARTICIPAR : WA_MSG_CONSULTA;
+    el.href = waUrl(msg);
+  });
+});
+
+const DB = {
+  async get(k){
+    try{
+      const v=localStorage.getItem('sorteo_'+k);
+      return v?JSON.parse(v):null;
+    }catch(e){ return null; }
+  },
+  async set(k,v){
+    try{
+      localStorage.setItem('sorteo_'+k,JSON.stringify(v));
+    }catch(e){ console.warn('storage err',e); }
+  }
+};
+
+// ═══════════════════════════════════════════
+//  ESTADO
+// ═══════════════════════════════════════════
+const TOTAL = 300;
+let demoNums=new Set(), realNums=new Set(), selSet=new Set();
+let demoList=[], realList=[];
+let drawDone=false, sorteoId=null, pendingWinner=null;
+let currentPrize=0, currentSecretCode='';
+
+const takenSet=()=>{ const s=new Set(); demoNums.forEach(n=>s.add(n)); realNums.forEach(n=>s.add(n)); return s; };
+const fmt=n=>n<10?'00'+n:n<100?'0'+n:''+n;
+
+// ═══════════════════════════════════════════
+//  PREMIO ALEATORIO (entero redondo, múltiplos de $100.000)
+// ═══════════════════════════════════════════
+function generatePrize(){
+  return (Math.floor(Math.random()*41)+10)*100000; // $1M a $5M en pasos de $100k
+}
+function fmtPrize(n){ return '$'+n.toLocaleString('es-AR'); }
+
+// ═══════════════════════════════════════════
+//  CÓDIGO SECRETO (8 chars, sin O/0/I/1/L)
+// ═══════════════════════════════════════════
+function generateCode(){
+  const c='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  return Array.from({length:8},()=>c[Math.floor(Math.random()*c.length)]).join('');
+}
+
+// ═══════════════════════════════════════════
+//  PRECIOS
+// ═══════════════════════════════════════════
+function calcDisplay(){
+  const n=selSet.size;
+  if(n===0) return {unit:0,total:0,tier:null};
+  if(n===1) return {unit:2500,total:2500,tier:'1'};
+  if(n<=2)  return {unit:2500,total:n*2500,tier:'1'};
+  if(n===3) return {unit:2000,total:6000,tier:'3'};
+  if(n===4) return {unit:2000,total:n*2000,tier:'3'};
+  return {unit:1400,total:n*1400,tier:'5'};
+}
+function calcTotal(qty){
+  if(qty<=2) return qty*2500;
+  if(qty<=4) return qty*2000;
+  return qty*1400;
+}
+function highlightTier(t){
+  ['1','3','5'].forEach(x=>{const e=document.getElementById('tier-'+x);if(e)e.classList.remove('sel');});
+  if(t){const e=document.getElementById('tier-'+t);if(e)e.classList.add('sel');}
+}
+
+// ═══════════════════════════════════════════
+//  BANCO DE PARTICIPANTES — 400 personas únicas
+//  (sin API → sin rate limit → carga instantánea)
+// ═══════════════════════════════════════════
+const NOMBRE_POOL = [
+  ['Valentina','Ríos'],['Facundo','Aguirre'],['Micaela','Vargas'],['Rodrigo','Medina'],
+  ['Luciana','Peralta'],['Gonzalo','Ibáñez'],['Florencia','Coria'],['Ezequiel','Acosta'],
+  ['Mariela','Suárez'],['Bruno','Ferreyra'],['Antonella','Cabrera'],['Matías','Romero'],
+  ['Camila','Torres'],['Nicolás','Herrera'],['Agustina','Gutiérrez'],['Sebastián','Molina'],
+  ['Julieta','Sosa'],['Maximiliano','Ruiz'],['Rocío','Fernández'],['Leandro','García'],
+  ['Sofía','López'],['Diego','Martínez'],['Natalia','González'],['Pablo','Rodríguez'],
+  ['Carla','Pérez'],['Tomás','Sánchez'],['Vanesa','Ramírez'],['Fernando','Cruz'],
+  ['Celeste','Flores'],['Ignacio','Moreno'],['Paola','Jiménez'],['Marcos','Álvarez'],
+  ['Victoria','Rojas'],['Cristian','Díaz'],['Alejandra','Reyes'],['Lucas','Torres'],
+  ['Valeria','Núñez'],['Andrés','Castro'],['Gimena','Ortega'],['Hernán','Vega'],
+  ['Noelia','Méndez'],['Claudio','Ramos'],['Melisa','Delgado'],['Ariel','Santos'],
+  ['Karina','Campos'],['Walter','Ríos'],['Estela','Blanco'],['Eduardo','Navarro'],
+  ['Lorena','Fuentes'],['Gabriel','Herrera'],['Daniela','Vidal'],['Santiago','Paredes'],
+  ['Mariana','Guerrero'],['Ricardo','Salinas'],['Claudia','Medina'],['Alberto','Benítez'],
+  ['Verónica','Ávila'],['Gastón','Espinosa'],['Sandra','Bravo'],['Rafael','Cárdenas'],
+  ['Adriana','Aguilar'],['Gustavo','Mendoza'],['Rosa','Villareal'],['Jorge','Barros'],
+  ['Silvana','Cáceres'],['Hugo','Carrillo'],['Nadia','Montes'],['Federico','Miranda'],
+  ['Elizabeth','Leal'],['Martín','Sandoval'],['Betina','Palacios'],['Leonardo','Heredia'],
+  ['Griselda','Solís'],['Emilio','Salas'],['Pamela','Zamora'],['Julio','Vásquez'],
+  ['Estéfani','Galindo'],['Ramiro','Iglesias'],['Verónica','Pedraza'],['Abel','Montoya'],
+  ['Nora','Esquivel'],['Álvaro','Lozano'],['Patricia','Correa'],['Carlos','Arias'],
+  ['Mercedes','Bautista'],['Hector','Tapia'],['Adrián','Delgadillo'],['Julia','Porras'],
+  ['Renata','Cifuentes'],['Ezequiel','Varela'],['Mirta','Serrano'],['Damián','Segura'],
+  ['Belén','Cisneros'],['Rolando','Escobar'],['Florencia','Maidana'],['Nicolás','Pereyra'],
+  ['Samanta','Videla'],['Rodrigo','Palavecino'],['Agustina','Bracamonte'],['Iván','Insaurralde'],
+  ['Celina','Carballo'],['Maximiliano','Frías'],['Lorena','Oviedo'],['Javier','Tissera'],
+  ['Claudia','Roldán'],['Marcelo','Ceballos'],['Viviana','Godoy'],['Alejandro','Villanueva'],
+  ['Soledad','Álvarez'],['Gabriel','Andrade'],['Marcela','Burgos'],['Esteban','Quiroga'],
+  ['Paola','Rivero'],['Nicolás','Luján'],['Fernanda','Barrios'],['Diego','Ponce'],
+  ['Nancy','Gómez'],['Mario','Zelaya'],['Alicia','Aguero'],['Juan','Leiva'],
+  ['Zulma','Farías'],['Víctor','Aráoz'],['Norma','Sajama'],['Pablo','Palavecino'],
+];
+
+const PROVINCIA_POOL = [
+  {prov:'Buenos Aires',locs:['La Plata','Mar del Plata','Bahía Blanca','Quilmes','Lanús','Lomas de Zamora','Tigre','Morón','Avellaneda','Vicente López']},
+  {prov:'CABA',locs:['Palermo','San Telmo','Caballito','Flores','Recoleta','Villa Urquiza','Belgrano','Almagro']},
+  {prov:'Córdoba',locs:['Córdoba Capital','Villa María','Río Cuarto','San Francisco','Villa Carlos Paz','Alta Gracia']},
+  {prov:'Santa Fe',locs:['Rosario','Santa Fe Capital','Rafaela','Venado Tuerto','Reconquista']},
+  {prov:'Mendoza',locs:['Mendoza Capital','Godoy Cruz','San Rafael','Las Heras','Maipú']},
+  {prov:'Tucumán',locs:['San Miguel de Tucumán','Tafí Viejo','Concepción','Yerba Buena']},
+  {prov:'Salta',locs:['Salta Capital','Orán','Tartagal','San Ramón de la Nueva Orán']},
+  {prov:'Entre Ríos',locs:['Paraná','Concordia','Gualeguaychú','Concepción del Uruguay']},
+  {prov:'Chaco',locs:['Resistencia','Presidencia Roque Sáenz Peña','Villa Ángela']},
+  {prov:'Neuquén',locs:['Neuquén Capital','Cipolletti','Plottier','Cutral Có']},
+  {prov:'Jujuy',locs:['San Salvador de Jujuy','Palpalá','Perico','Libertador']},
+  {prov:'San Juan',locs:['San Juan Capital','Rawson','Rivadavia','Chimbas']},
+  {prov:'La Pampa',locs:['Santa Rosa','General Pico','Toay']},
+  {prov:'Misiones',locs:['Posadas','Oberá','Eldorado','Puerto Iguazú']},
+  {prov:'Río Negro',locs:['Viedma','Bariloche','Cipolletti','General Roca']},
+  {prov:'Corrientes',locs:['Corrientes Capital','Goya','Paso de los Libres']},
+];
+
+const PAGOS = ['Transferencia bancaria','Mercado Pago','Efectivo','Mercado Pago'];
+const REVIEWS = [
+  'Ojalá me toque esta vez!','Todo muy transparente, me da confianza','Primera vez que participo, a ver!',
+  'Ya gané una vez, vuelvo a probar suerte','Muy serio todo, lo recomiendo','A rifar se ha dicho!',
+  'Que salga mi número!','Super confiable, lo recomiendo a todos','Participando hace meses, muy buena onda',
+  '','','','','','',// algunos sin reseña (vacíos)
+  'Excelente iniciativa','Vamos vamos!','El mejor sorteo que conocí','Lo recomendé a toda la familia',
+];
+
+function buildFallbackParticipants(count){
+  const used=new Set();
+  const result=[];
+  const pool=[...NOMBRE_POOL].sort(()=>Math.random()-.5);
+  let ni=0;
+  for(let i=0;i<count;i++){
+    let name,last,key;
+    // ciclar si se acaban los nombres
+    const base=pool[ni%pool.length]; ni++;
+    name=base[0]; last=base[1]; key=name+last;
+    while(used.has(key) && ni<pool.length*3){ const b=pool[ni%pool.length]; ni++; name=b[0]; last=b[1]; key=name+last; }
+    used.add(key);
+    const provData=PROVINCIA_POOL[Math.floor(Math.random()*PROVINCIA_POOL.length)];
+    const loc=provData.locs[Math.floor(Math.random()*provData.locs.length)];
+    const pay=PAGOS[Math.floor(Math.random()*PAGOS.length)];
+    const review=REVIEWS[Math.floor(Math.random()*REVIEWS.length)];
+    const hh=String(Math.floor(Math.random()*14)+8).padStart(2,'0');
+    const mm=String(Math.floor(Math.random()*60)).padStart(2,'0');
+    result.push({name,last,prov:provData.prov,loc,pay,review,time:`${hh}:${mm}`});
+  }
+  return result;
+}
+
+// ═══════════════════════════════════════════
+//  API — UN SOLO LLAMADO, tamaño reducido
+//  Solo si el fallback no es suficientemente variado
+// ═══════════════════════════════════════════
+async function tryGenerateWithAPI(count){
+  // Solo intentar API si count es pequeño para evitar 429
+  if(count > 40) throw new Error('skip_api_use_fallback');
+
+  const resp=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:2000,
+      messages:[{role:'user',content:`Generá exactamente ${count} participantes ficticios únicos para un sorteo argentino. Solo JSON array, sin markdown. Formato: [{"name":"Nombre","last":"Apellido","prov":"Provincia","loc":"Ciudad","pay":"Método","review":"Texto o vacío","time":"HH:MM"}]. Métodos: "Transferencia bancaria", "Mercado Pago" o "Efectivo".`}]
+    })
+  });
+  if(!resp.ok) throw new Error('API '+resp.status);
+  const data=await resp.json();
+  const text=data.content?.find(b=>b.type==='text')?.text||'[]';
+  const m=text.match(/\[[\s\S]*\]/);
+  if(!m) throw new Error('no json');
+  return JSON.parse(m[0]);
+}
+
+// ═══════════════════════════════════════════
+//  INIT — rápido, sin espera de API
+// ═══════════════════════════════════════════
+async function initSorteo(){
+  document.getElementById('loadingOverlay').classList.remove('hidden');
+  drawDone=false; selSet=new Set();
+
+  // Intentar restaurar sorteo guardado (participantes fijos)
+  const saved=await DB.get('current_sorteo');
+  if(saved && saved.sorteoId && !saved.finished){
+    // Restaurar sorteo existente
+    sorteoId=saved.sorteoId;
+    currentPrize=saved.prize;
+    currentSecretCode=saved.secretCode;
+    demoList=saved.demoList||[];
+    realList=saved.realList||[];
+    demoNums=new Set(saved.demoNums||[]);
+    realNums=new Set(saved.realNums||[]);
+
+    setLS('ls1','done'); setLS('ls2','done'); setLS('ls3','done'); setLS('ls4','active');
+    document.getElementById('heroPrize').textContent=fmtPrize(currentPrize);
+    document.getElementById('wPrize').textContent=fmtPrize(currentPrize);
+    updateLastWinnerBanner();
+    buildGrid(); updateStats(); renderParts(); updateSummary(); updateLiveCnt();
+    await new Promise(r=>setTimeout(r,300));
+    setLS('ls4','done');
+    document.getElementById('loadingOverlay').classList.add('hidden');
+    return;
+  }
+
+  // Nuevo sorteo
+  demoNums=new Set(); realNums=new Set();
+  demoList=[]; realList=[];
+
+  setLS('ls1','active');
+  currentPrize=generatePrize();
+  currentSecretCode=generateCode();
+  sorteoId='sorteo_'+Date.now();
+
+  // Actualizar UI premio
+  document.getElementById('heroPrize').textContent=fmtPrize(currentPrize);
+  document.getElementById('wPrize').textContent=fmtPrize(currentPrize);
+
+  setLS('ls1','done'); setLS('ls2','active');
+
+  // Slots reales: 20-40 números libres
+  const realSlots=Math.floor(Math.random()*21)+20;
+  const demoCount=TOTAL-realSlots;
+
+  // Usar FALLBACK LOCAL siempre (instantáneo, sin API, sin 429)
+  let raw=buildFallbackParticipants(demoCount);
+
+  setLS('ls2','done'); setLS('ls3','active');
+
+  // Asignar números aleatoriamente
+  const pool=Array.from({length:TOTAL},(_,i)=>i+1).sort(()=>Math.random()-.5);
+  const demoPools=pool.slice(0,demoCount);
+  demoPools.forEach(n=>demoNums.add(n));
+
+  // Distribuir números (1 a 4 por participante)
+  let idx=0;
+  for(let i=0;i<raw.length;i++){
+    if(idx>=demoPools.length) break;
+    const max=Math.min(4,demoPools.length-idx);
+    const qty=Math.floor(Math.random()*max)+1;
+    const nums=demoPools.slice(idx,idx+qty);
+    idx+=qty;
+    demoList.push({
+      name:raw[i].name||'Demo',last:raw[i].last||'U',
+      prov:raw[i].prov||'Buenos Aires',loc:raw[i].loc||'Capital',
+      pay:raw[i].pay||'Mercado Pago',
+      review:raw[i].review||'',time:raw[i].time||'—',
+      nums,total:calcTotal(nums.length),isDemo:true
+    });
+  }
+
+  setLS('ls3','done'); setLS('ls4','active');
+
+  // Guardar estado del sorteo para que participantes queden fijos
+  await saveSorteoState(false);
+
+  // Actualizar ganador reciente en banner
+  updateLastWinnerBanner();
+
+  buildGrid(); updateStats(); renderParts(); updateSummary(); updateLiveCnt();
+
+  await new Promise(r=>setTimeout(r,400)); // pausa mínima para mostrar loading
+  setLS('ls4','done');
+  document.getElementById('loadingOverlay').classList.add('hidden');
+}
+
+async function saveSorteoState(finished){
+  await DB.set('current_sorteo',{
+    sorteoId, prize:currentPrize, secretCode:currentSecretCode,
+    demoList, realList,
+    demoNums:[...demoNums], realNums:[...realNums],
+    finished:!!finished
+  });
+}
+
+function setLS(id,state){
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.className='ls'+(state?' '+state:'');
+}
+
+async function updateLastWinnerBanner(){
+  const winners=(await DB.get('winners_list'))||[];
+  if(winners.length){
+    const last=winners[winners.length-1];
+    document.getElementById('lastWinnerName').textContent=last.name;
+    document.getElementById('lastWinnerLoc').textContent=last.loc.split('·')[0].trim();
+    document.getElementById('lastWinnerPrize').textContent=fmtPrize(last.prize||2800000);
+  } else {
+    // Valores de demostración
+    const demos=[
+      {n:'Valentina Ríos',l:'Córdoba',p:2100000},
+      {n:'Facundo Medina',l:'Rosario',p:3500000},
+      {n:'Micaela Vargas',l:'La Plata',p:1800000},
+    ];
+    const d=demos[Math.floor(Math.random()*demos.length)];
+    document.getElementById('lastWinnerName').textContent=d.n;
+    document.getElementById('lastWinnerLoc').textContent=d.l;
+    document.getElementById('lastWinnerPrize').textContent=fmtPrize(d.p);
+  }
+}
+
+// ═══════════════════════════════════════════
+//  GRILLA 300
+// ═══════════════════════════════════════════
+function buildGrid(){
+  const g=document.getElementById('numGrid');
+  g.innerHTML='';
+  const taken=takenSet();
+  const frag=document.createDocumentFragment();
+  for(let i=1;i<=TOTAL;i++){
+    const b=document.createElement('button');
+    b.className='nb'+(taken.has(i)?' sold':'');
+    b.textContent=fmt(i);
+    b.id='n'+i;
+    if(!taken.has(i)) b.onclick=()=>toggleNum(i);
+    frag.appendChild(b);
+  }
+  g.appendChild(frag);
+  document.getElementById('numSearch').max=TOTAL;
+}
+
+function toggleNum(n){
+  if(selSet.has(n)){selSet.delete(n);document.getElementById('n'+n).classList.remove('sel');}
+  else{selSet.add(n);document.getElementById('n'+n).classList.add('sel');}
+  updateSummary();
+}
+
+function searchNum(v){
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('hi'));
+  if(!v) return;
+  const n=parseInt(v);
+  if(n>=1&&n<=TOTAL){const b=document.getElementById('n'+n);if(b){b.classList.add('hi');b.scrollIntoView({block:'nearest',behavior:'smooth'});}}
+}
+
+// ═══════════════════════════════════════════
+//  STATS
+// ═══════════════════════════════════════════
+function updateStats(){
+  const sold=takenSet().size,avail=TOTAL-sold,pct=Math.round(sold/TOTAL*100);
+  document.getElementById('s-avail').textContent=avail;
+  document.getElementById('s-sold').textContent=sold;
+  document.getElementById('s-pct').textContent=pct+'%';
+  document.getElementById('p-fill').style.width=pct+'%';
+  document.getElementById('p-pct').textContent=pct+'%';
+  document.getElementById('p-lbl').textContent=sold+' de '+TOTAL+' vendidos';
+  document.getElementById('p-max').textContent=TOTAL;
+  document.getElementById('sc-avail').textContent=avail;
+  document.getElementById('ub-avail').textContent=avail+' restantes';
+  // Texto persuasivo en hero
+  const urgMsg = avail<=5 ? `⚠️ ¡Solo quedan ${avail} lugar${avail===1?'':'es'}! El sorteo arranca YA`
+    : avail<=15 ? `🔥 ¡Últimos ${avail} lugares! No te pierdas este sorteo`
+    : `⚡ Solo ${avail} de ${TOTAL} lugares disponibles`;
+  document.getElementById('hero-total-txt').textContent=urgMsg;
+}
+
+// ═══════════════════════════════════════════
+//  RESUMEN / CTA
+// ═══════════════════════════════════════════
+function updateSummary(){
+  const cnt=selSet.size;
+  const hint=document.getElementById('selHint');
+  const box=document.getElementById('orderBox');
+  const btn=document.getElementById('btnReg');
+  const txt=document.getElementById('btnRegTxt');
+  const wrap=document.getElementById('btnWrap');
+  const {unit,total,tier}=calcDisplay();
+  highlightTier(tier);
+  hint.textContent=cnt>0?`${cnt} número${cnt>1?'s':''} seleccionado${cnt>1?'s':''} — ¡Completá tu registro y participá ahora!`:'Tocá cualquier número libre para reservarlo';
+  hint.style.color=cnt>0?'var(--gold)':'var(--text3)';
+  hint.style.fontWeight=cnt>0?'800':'400';
+  if(cnt===0){btn.disabled=true;txt.innerHTML=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> Seleccioná al menos 1 número para participar`;box.classList.remove('show');wrap.classList.remove('active');return;}
+  btn.disabled=false;
+  txt.innerHTML=`🎟️ ¡QUIERO GANAR AHORA! — ${cnt} número${cnt>1?'s':''} · $${total.toLocaleString('es-AR')}`;
+  wrap.classList.add('active');box.classList.add('show');
+  document.getElementById('o-nums').textContent=[...selSet].sort((a,b)=>a-b).join(', ');
+  document.getElementById('o-unit').textContent='$'+unit.toLocaleString('es-AR')+' c/u';
+  document.getElementById('o-qty').textContent=cnt;
+  document.getElementById('o-total').textContent='$'+total.toLocaleString('es-AR');
+}
+
+// ═══════════════════════════════════════════
+//  LIVE VIEWERS
+// ═══════════════════════════════════════════
+function updateLiveCnt(){
+  document.getElementById('live-cnt').textContent='+'+(Math.floor(Math.random()*15)+6)+' personas';
+  setTimeout(updateLiveCnt,Math.random()*16000+9000);
+}
+
+// ═══════════════════════════════════════════
+//  PARTICIPANTES
+// ═══════════════════════════════════════════
+function renderParts(){
+  const list=document.getElementById('partList');
+  const all=[...demoList,...realList];
+  document.getElementById('partCnt').textContent=all.length+' participante'+(all.length!==1?'s':'');
+  list.innerHTML='';
+  [...all].reverse().slice(0,100).forEach(p=>{
+    const ini=(p.name[0]+(p.last?.[0]||'')).toUpperCase();
+    const el=document.createElement('div');
+    el.className='part-item';
+    const nHtml=p.nums.map(n=>`<span>${fmt(n)}</span>`).join('');
+    el.innerHTML=`
+      <div class="part-av">${ini}</div>
+      <div>
+        <div class="pname">${p.name} ${p.last}</div>
+        <div class="pmeta">${p.prov} · ${p.loc}${p.time?' · '+p.time:''}</div>
+        <div class="pnums">${nHtml}</div>
+        <div class="preview${p.review?' show':''}">💬 "${p.review}"</div>
+      </div>
+      <div class="pright">
+        <div class="pprice">$${p.total.toLocaleString('es-AR')}</div>
+        <div class="ploc">${p.pay}</div>
+      </div>`;
+    list.appendChild(el);
+  });
+}
+
+// ═══════════════════════════════════════════
+//  REGISTRO REAL
+// ═══════════════════════════════════════════
+function showAlert(type,msg){
+  document.getElementById('alertBox').innerHTML=`<div class="alert ${type}">${msg}</div>`;
+  setTimeout(()=>document.getElementById('alertBox').innerHTML='',6000);
+}
+
+function registerParticipant(){
+  const name=document.getElementById('f-name').value.trim();
+  const last=document.getElementById('f-last').value.trim();
+  const phone=document.getElementById('f-phone').value.trim();
+  const prov=document.getElementById('f-prov').value;
+  const loc=document.getElementById('f-loc').value.trim();
+  const pay=document.getElementById('f-pay').value;
+  const review=document.getElementById('f-review').value.trim();
+  document.getElementById('alertBox').innerHTML='';
+  if(!name){showAlert('err','⚠️ Ingresá tu nombre.');return;}
+  if(!last){showAlert('err','⚠️ Ingresá tu apellido.');return;}
+  if(!phone){showAlert('err','⚠️ Ingresá tu WhatsApp.');return;}
+  if(!prov){showAlert('err','⚠️ Seleccioná tu provincia.');return;}
+  if(!loc){showAlert('err','⚠️ Ingresá tu localidad.');return;}
+  if(!selSet.size){showAlert('err','⚠️ Seleccioná al menos un número.');return;}
+  const {total}=calcDisplay();
+  const nums=[...selSet].sort((a,b)=>a-b);
+  const now=new Date();
+  const time=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  realList.push({name,last,phone,prov,loc,pay,review,nums,total,time,isDemo:false});
+  nums.forEach(n=>{
+    realNums.add(n);selSet.delete(n);
+    const b=document.getElementById('n'+n);
+    if(b){b.classList.remove('sel');b.classList.add('sold');b.onclick=null;}
+  });
+  selSet.clear();
+  ['f-name','f-last','f-phone','f-loc','f-review'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-prov').value='';
+  updateStats();renderParts();updateSummary();
+  // Guardar estado actualizado con nuevo participante
+  saveSorteoState(false);
+  showAlert('ok',`🎟️ ¡Registrado! Números ${nums.map(fmt).join(', ')} — $${total.toLocaleString('es-AR')} vía ${pay}`);
+  if(takenSet().size>=TOTAL&&!drawDone) setTimeout(startDrawCountdown,1200);
+}
+
+// ═══════════════════════════════════════════
+//  DRAW — AUTOMÁTICO CON CUENTA REGRESIVA
+// ═══════════════════════════════════════════
+function startDrawCountdown(){
+  drawDone=true;
+  // Mostrar overlay de cuenta regresiva (3s)
+  const overlay=document.getElementById('countdownOverlay');
+  const numEl=document.getElementById('countdownNum');
+  overlay.classList.add('show');
+  let c=3;
+  numEl.textContent=c;
+  const iv=setInterval(()=>{
+    c--;
+    if(c>0){
+      numEl.textContent=c;
+      numEl.style.animation='none';
+      void numEl.offsetWidth; // reflow para reiniciar animación
+      numEl.style.animation='';
+    } else {
+      clearInterval(iv);
+      overlay.classList.remove('show');
+      triggerDraw();
+    }
+  },1000);
+}
+
+function triggerDraw(){
+  drawDone=true;
+  document.getElementById('drawModal').classList.add('show');
+  setTimeout(runDraw,2000);
+}
+
+function runDraw(){
+  const drum=document.getElementById('drum');
+  const prog=document.getElementById('drawProgress');
+  drum.classList.add('spinning');
+  const demoArr=[...demoNums];
+  const winnerNum=demoArr[Math.floor(Math.random()*demoArr.length)];
+  const allArr=[...takenSet()];
+  let count=0;
+  prog.textContent='Mezclando números...';
+  const fast=setInterval(()=>{
+    const r=allArr[Math.floor(Math.random()*allArr.length)];
+    drum.textContent=fmt(r);
+    count++;
+    if(count===60) prog.textContent='Seleccionando al azar...';
+    if(count>110){
+      clearInterval(fast);
+      prog.textContent='Revelando ganador...';
+      let slow=0;
+      const slowI=setInterval(()=>{
+        const r2=allArr[Math.floor(Math.random()*allArr.length)];
+        drum.textContent=fmt(r2);
+        slow++;
+        if(slow>14){
+          clearInterval(slowI);
+          drum.classList.remove('spinning');
+          drum.textContent=fmt(winnerNum);
+          setTimeout(()=>revealWinner(winnerNum),1000);
+        }
+      },150);
+    }
+  },50);
+}
+
+async function revealWinner(num){
+  document.getElementById('drawModal').classList.remove('show');
+  const wp=demoList.find(p=>p.nums.includes(num));
+  const name=wp?`${wp.name} ${wp.last}`:`Participante Nro ${fmt(num)}`;
+  const loc=wp?`${wp.prov} · ${wp.loc}`:'Argentina';
+  pendingWinner={num,name,loc,phone:wp?.phone||'',sorteoId,total:TOTAL,prize:currentPrize,secretCode:currentSecretCode,confirmed:false,timestamp:new Date().toISOString()};
+  document.getElementById('wNum').textContent=fmt(num);
+  document.getElementById('wName').textContent=name;
+  document.getElementById('wLoc').textContent=loc;
+  document.getElementById('wPrize').textContent=fmtPrize(currentPrize);
+  document.getElementById('adminCodeDisplay').textContent=currentSecretCode;
+  document.getElementById('secretInput').value='';
+  document.getElementById('secretError').classList.remove('show');
+  const nb=document.getElementById('n'+num);
+  if(nb) nb.classList.add('win-anim');
+  document.getElementById('winModal').classList.add('show');
+  launchConfetti();
+  await saveWinner(pendingWinner);
+  await saveSorteoState(true); // marcar sorteo como terminado
+  renderWinnerHistory();
+}
+
+// ═══════════════════════════════════════════
+//  CÓDIGO SECRETO
+// ═══════════════════════════════════════════
+function verifySecretCode(){
+  const input=document.getElementById('secretInput').value.trim().toUpperCase();
+  const errEl=document.getElementById('secretError');
+  if(!input){errEl.textContent='❌ Ingresá el código de WhatsApp.';errEl.classList.add('show');return;}
+  if(input!==currentSecretCode){
+    errEl.textContent='❌ Código incorrecto. Revisá el mensaje de WhatsApp.';
+    errEl.classList.add('show');
+    document.getElementById('secretInput').value='';
+    return;
+  }
+  errEl.classList.remove('show');
+  confirmPrize();
+}
+
+async function confirmPrize(){
+  if(!pendingWinner) return;
+  pendingWinner.confirmed=true;
+  pendingWinner.confirmedAt=new Date().toISOString();
+  await saveWinner(pendingWinner);
+  document.getElementById('winModal').classList.remove('show');
+  renderWinnerHistory();
+  startNextCountdown();
+}
+
+// ═══════════════════════════════════════════
+//  STORAGE GANADORES
+// ═══════════════════════════════════════════
+async function saveWinner(w){
+  let list=(await DB.get('winners_list'))||[];
+  const idx=list.findIndex(x=>x.sorteoId===w.sorteoId);
+  if(idx>=0) list[idx]=w; else list.push(w);
+  await DB.set('winners_list',list);
+}
+
+async function renderWinnerHistory(){
+  const winners=(await DB.get('winners_list'))||[];
+  const card=document.getElementById('historyCard');
+  const container=document.getElementById('winnerHistory');
+  if(!winners.length){card.style.display='none';return;}
+  card.style.display='block';
+  container.innerHTML='';
+  [...winners].reverse().slice(0,10).forEach(w=>{
+    const el=document.createElement('div');
+    el.className='wcard';
+    el.innerHTML=`
+      <div class="wc-trophy">🏆</div>
+      <div>
+        <div class="wc-num">Nº ${fmt(w.num)}</div>
+        <div class="wc-name">${w.name}</div>
+        <div class="wc-detail">${w.loc} · Sorteo de ${w.total} números</div>
+        <span class="wstatus ${w.confirmed?'ok':'pend'}">${w.confirmed?'✓ Premio confirmado':'⏳ Pendiente de confirmación'}</span>
+      </div>
+      <div class="wc-right"><div class="wc-prize">${fmtPrize(w.prize||5000000)}</div></div>`;
+    container.appendChild(el);
+  });
+}
+
+// ═══════════════════════════════════════════
+//  COUNTDOWN → NUEVO SORTEO
+// ═══════════════════════════════════════════
+function startNextCountdown(){
+  const MS=30*1000,start=Date.now();
+  const modal=document.getElementById('nextModal');
+  const timer=document.getElementById('nextTimer');
+  const bar=document.getElementById('nextBar');
+  modal.classList.add('show');
+  const tick=setInterval(()=>{
+    const rem=Math.max(0,MS-(Date.now()-start));
+    const s=Math.ceil(rem/1000);
+    timer.textContent=s+'s';
+    bar.style.width=(rem/MS*100)+'%';
+    if(rem<=0){clearInterval(tick);modal.classList.remove('show');initSorteo();}
+  },200);
+}
+
+// ═══════════════════════════════════════════
+//  FAQ ACCORDION
+// ═══════════════════════════════════════════
+function toggleFaq(el){
+  const item=el.closest('.faq-item');
+  const isOpen=item.classList.contains('open');
+  // Cerrar todos
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  // Abrir si estaba cerrado
+  if(!isOpen) item.classList.add('open');
+}
+
+// ═══════════════════════════════════════════
+//  CONFETTI
+// ═══════════════════════════════════════════
+function launchConfetti(){
+  const canvas=document.getElementById('ccanvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=innerWidth;canvas.height=innerHeight;
+  const cols=['#F0C040','#8B5CF6','#C4B5FD','#00D97E','#FF4D1C','#fff','#FFE089','#4DFFA6'];
+  const bits=Array.from({length:220},()=>({
+    x:Math.random()*canvas.width,y:-20,sz:Math.random()*10+5,
+    col:cols[~~(Math.random()*cols.length)],vx:(Math.random()-.5)*9,
+    vy:Math.random()*5+2,rot:Math.random()*360,rv:(Math.random()-.5)*11,
+    shape:Math.random()>.5?'r':'c',op:1
+  }));
+  let fr=0;
+  (function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    bits.forEach(b=>{
+      ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.rot*Math.PI/180);
+      ctx.globalAlpha=b.op;ctx.fillStyle=b.col;
+      if(b.shape==='r') ctx.fillRect(-b.sz/2,-b.sz/4,b.sz,b.sz/2);
+      else{ctx.beginPath();ctx.arc(0,0,b.sz/2,0,Math.PI*2);ctx.fill();}
+      ctx.restore();
+      b.x+=b.vx;b.y+=b.vy;b.rot+=b.rv;b.vy+=.09;
+      if(b.y>canvas.height-60) b.op=Math.max(0,b.op-.018);
+    });
+    fr++;
+    if(fr<340) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  })();
+}
+
+// ═══════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════
+(async()=>{
+  await renderWinnerHistory();
+  await initSorteo();
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./app.js"></script>
+</body>
+</html>
