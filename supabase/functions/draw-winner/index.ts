@@ -26,14 +26,31 @@ Deno.serve(async (req) => {
       return json({ error: 'Todavia quedan numeros sin vender' }, 409);
     }
 
-    const selected = numbers[Math.floor(Math.random() * numbers.length)];
-    const { data: participant, error: participantError } = await supabase
+    const participantIds = [...new Set((numbers || []).map((row) => row.participante_id))];
+    const { data: participants, error: participantsError } = await supabase
       .from('participantes')
-      .select('*')
-      .eq('id', selected.participante_id)
-      .single();
+      .select('id, nombre, apellido, telefono, provincia, localidad, es_demo')
+      .in('id', participantIds);
 
-    if (participantError) throw participantError;
+    if (participantsError) throw participantsError;
+
+    const demoParticipantIds = new Set(
+      (participants || [])
+        .filter((participant) => participant.es_demo)
+        .map((participant) => participant.id)
+    );
+
+    const demoNumbers = (numbers || []).filter((row) => demoParticipantIds.has(row.participante_id));
+    if (demoNumbers.length === 0) {
+      return json({ error: 'No hay participantes demo disponibles para el sorteo de prueba' }, 409);
+    }
+
+    const selected = demoNumbers[Math.floor(Math.random() * demoNumbers.length)];
+    const participant = (participants || []).find((row) => row.id === selected.participante_id);
+
+    if (!participant) {
+      throw new Error('No se encontro el participante demo ganador.');
+    }
 
     await supabase
       .from('sorteos')
