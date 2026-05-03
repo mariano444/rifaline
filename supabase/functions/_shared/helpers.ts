@@ -92,6 +92,9 @@ export const NAME_POOL: Array<[string, string]> = [
   ['Nancy', 'Gomez'], ['Mario', 'Zelaya'], ['Alicia', 'Aguero'], ['Juan', 'Leiva'],
 ];
 
+const FIRST_NAMES = [...new Set(NAME_POOL.map(([first]) => first))];
+const LAST_NAMES = [...new Set(NAME_POOL.map(([, last]) => last))];
+
 export const PROVINCES = [
   { prov: 'Buenos Aires', locs: ['La Plata', 'Mar del Plata', 'Bahia Blanca', 'Quilmes', 'Lanus'] },
   { prov: 'CABA', locs: ['Palermo', 'Caballito', 'Recoleta', 'Belgrano', 'Almagro'] },
@@ -123,11 +126,31 @@ export function buildDemoParticipants(totalNumbers: number) {
   const shuffledNames = shuffle(NAME_POOL);
   const numberPool = shuffle(Array.from({ length: 300 }, (_, index) => index + 1)).slice(0, totalNumbers);
   const participants = [];
+  const usedNames = new Set<string>();
   let index = 0;
   let nameIndex = 0;
 
   while (index < numberPool.length) {
-    const [nombre, apellido] = shuffledNames[nameIndex % shuffledNames.length];
+    let nombre = '';
+    let apellido = '';
+
+    for (let tries = 0; tries < FIRST_NAMES.length * LAST_NAMES.length; tries += 1) {
+      const base = shuffledNames[nameIndex % shuffledNames.length];
+      const candidateFirst = tries === 0 ? base[0] : FIRST_NAMES[(nameIndex + tries) % FIRST_NAMES.length];
+      const candidateLast = tries === 0 ? base[1] : LAST_NAMES[(nameIndex + tries * 3) % LAST_NAMES.length];
+      const fullName = `${candidateFirst} ${candidateLast}`;
+      if (!usedNames.has(fullName)) {
+        nombre = candidateFirst;
+        apellido = candidateLast;
+        usedNames.add(fullName);
+        break;
+      }
+    }
+
+    if (!nombre || !apellido) {
+      throw new Error('No hay suficientes identidades demo unicas para crear el sorteo.');
+    }
+
     const province = PROVINCES[randomInt(0, PROVINCES.length - 1)];
     const qty = Math.min(randomInt(1, 4), numberPool.length - index);
     const numeros = numberPool.slice(index, index + qty).sort((a, b) => a - b);
@@ -231,7 +254,7 @@ export async function fetchCurrentState(supabase: ReturnType<typeof adminClient>
   if (error) throw error;
 
   if (!raffle) {
-    const realSlots = randomInt(20, 40);
+    const realSlots = randomInt(30, 60);
     const prize = generatePrize();
     const secretCode = generateCode();
     const sorteoKey = `sorteo_${Date.now()}`;
