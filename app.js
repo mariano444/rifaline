@@ -171,6 +171,12 @@ function applyRaffleState(payload) {
   updateSummary();
   renderWinnerHistory(payload.winners || []);
   updateLastWinnerBanner(payload.winners || []);
+
+  if (takenSet().size >= TOTAL && !drawDone && raffle.estado === 'activo') {
+    window.setTimeout(() => {
+      if (!drawDone) startDrawCountdown();
+    }, 1200);
+  }
 }
 
 async function loadRaffleState(showLoader) {
@@ -460,6 +466,11 @@ async function syncPaymentStatus(referenceId, silent) {
       localStorage.removeItem(PAYMENT_STORAGE_KEY);
       clearFormAfterSuccess();
       await loadRaffleState(false);
+      if (takenSet().size >= TOTAL && !drawDone) {
+        window.setTimeout(() => {
+          if (!drawDone) startDrawCountdown();
+        }, 1200);
+      }
       if (!silent) {
         showAlert('ok', `Pago confirmado. Tus numeros ${data.order.numbers.map(fmt).join(', ')} ya quedaron registrados.`);
       }
