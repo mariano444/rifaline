@@ -610,20 +610,45 @@ function verifySecretCode() {
 
 async function confirmPrize(code) {
   if (!pendingWinner) return;
+  const btn = document.querySelector('.btn-secret');
+  const input = document.getElementById('secretInput');
+  const errEl = document.getElementById('secretError');
+
   try {
-    await invokeFunction(FUNCTION_NAMES.confirmWinner, { sorteoId, code });
-    document.getElementById('winModal').classList.remove('show');
-    await loadRaffleState(false);
-    startNextCountdown();
+    btn.disabled = true;
+    btn.textContent = '⌛ Verificando...';
+    
+    const data = await invokeFunction(FUNCTION_NAMES.confirmWinner, { sorteoId, code });
+    
+    // Éxito: Mostrar mensaje en el modal antes de cerrar
+    btn.style.background = 'var(--emerald)';
+    btn.textContent = '✅ Confirmado';
+    input.disabled = true;
+    errEl.textContent = '¡Entrega confirmada! Iniciando próximo sorteo...';
+    errEl.style.color = 'var(--emerald)';
+    errEl.classList.add('show');
+
+    // Aplicar el nuevo estado inmediatamente si viene en la respuesta
+    if (data.raffle) {
+      applyRaffleState(data);
+    }
+
+    window.setTimeout(() => {
+      document.getElementById('winModal').classList.remove('show');
+      startNextCountdown();
+    }, 2000);
+
   } catch (error) {
-    const errEl = document.getElementById('secretError');
+    btn.disabled = false;
+    btn.textContent = '✅ Verificar';
     errEl.textContent = error.message || 'No pudimos confirmar el premio.';
+    errEl.style.color = 'var(--red)';
     errEl.classList.add('show');
   }
 }
 
 function startNextCountdown() {
-  const durationMs = 30000;
+  const durationMs = 10000; // Reducido a 10s para mejor flujo
   const startedAt = Date.now();
   const modal = document.getElementById('nextModal');
   const timer = document.getElementById('nextTimer');
@@ -638,6 +663,8 @@ function startNextCountdown() {
 
     window.clearInterval(interval);
     modal.classList.remove('show');
+    // Ya no es estrictamente necesario llamar a loadRaffleState aquí si confirmPrize ya lo hizo,
+    // pero lo dejamos por seguridad para asegurar que todo esté sincronizado.
     await loadRaffleState(false);
   }, 200);
 }
