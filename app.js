@@ -172,6 +172,11 @@ function applyRaffleState(payload) {
   renderWinnerHistory(payload.winners || []);
   updateLastWinnerBanner(payload.winners || []);
 
+  // Si hay un ganador pendiente que no ha sido confirmado, mostrar el modal automáticamente
+  if (pendingWinner && !pendingWinner.confirmado) {
+    revealWinner(pendingWinner);
+  }
+
   if (takenSet().size >= TOTAL && !drawDone && raffle.estado === 'activo') {
     window.setTimeout(() => {
       if (!drawDone) startDrawCountdown();
@@ -338,6 +343,16 @@ function renderParts() {
 
 function updateLastWinnerBanner(winners) {
   const last = Array.isArray(winners) && winners.length ? winners[0] : null;
+  const banner = document.getElementById('recentWinnerBanner');
+  if (banner) {
+    banner.style.cursor = 'pointer';
+    banner.onclick = () => {
+      if (pendingWinner && !pendingWinner.confirmado) {
+        revealWinner(pendingWinner);
+      }
+    };
+  }
+
   if (last) {
     document.getElementById('lastWinnerName').textContent = last.nombre;
     document.getElementById('lastWinnerLoc').textContent = last.localidad;
