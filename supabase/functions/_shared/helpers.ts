@@ -90,24 +90,28 @@ export const NAME_POOL: Array<[string, string]> = [
   ['Mercedes', 'Bautista'], ['Hector', 'Tapia'], ['Adrian', 'Delgadillo'], ['Julia', 'Porras'],
   ['Renata', 'Cifuentes'], ['Damian', 'Segura'], ['Belen', 'Cisneros'], ['Rolando', 'Escobar'],
   ['Nancy', 'Gomez'], ['Mario', 'Zelaya'], ['Alicia', 'Aguero'], ['Juan', 'Leiva'],
+  ['Teresa', 'Luna'], ['Oscar', 'Soto'], ['Dora', 'Pinto'], ['Raul', 'Vera'],
+  ['Elena', 'Guerra'], ['Oscar', 'Silva'], ['Gloria', 'Rojas'], ['Hugo', 'Moya'],
+  ['Silvia', 'Soto'], ['Luis', 'Vidal'], ['Rosa', 'Perez'], ['Jose', 'Gomez'],
+  ['Ana', 'Lopez'], ['Juan', 'Garcia'], ['Maria', 'Martinez'], ['Carlos', 'Rodriguez'],
 ];
 
 const FIRST_NAMES = [...new Set(NAME_POOL.map(([first]) => first))];
 const LAST_NAMES = [...new Set(NAME_POOL.map(([, last]) => last))];
 
 export const PROVINCES = [
-  { prov: 'Buenos Aires', locs: ['La Plata', 'Mar del Plata', 'Bahia Blanca', 'Quilmes', 'Lanus'] },
-  { prov: 'CABA', locs: ['Palermo', 'Caballito', 'Recoleta', 'Belgrano', 'Almagro'] },
-  { prov: 'Cordoba', locs: ['Cordoba Capital', 'Villa Maria', 'Rio Cuarto', 'San Francisco'] },
-  { prov: 'Santa Fe', locs: ['Rosario', 'Santa Fe Capital', 'Rafaela', 'Venado Tuerto'] },
-  { prov: 'Mendoza', locs: ['Mendoza Capital', 'Godoy Cruz', 'San Rafael', 'Las Heras'] },
-  { prov: 'Tucuman', locs: ['San Miguel de Tucuman', 'Tafi Viejo', 'Concepcion'] },
-  { prov: 'Salta', locs: ['Salta Capital', 'Oran', 'Tartagal'] },
-  { prov: 'Entre Rios', locs: ['Parana', 'Concordia', 'Gualeguaychu'] },
-  { prov: 'Chaco', locs: ['Resistencia', 'Sanez Pena', 'Villa Angela'] },
-  { prov: 'Neuquen', locs: ['Neuquen Capital', 'Plottier', 'Cutral Co'] },
-  { prov: 'Jujuy', locs: ['San Salvador de Jujuy', 'Perico', 'Libertador'] },
-  { prov: 'Misiones', locs: ['Posadas', 'Obera', 'Eldorado'] },
+  { prov: 'Buenos Aires', locs: ['La Plata', 'Mar del Plata', 'Bahia Blanca', 'Quilmes', 'Lanus', 'Avellaneda', 'Moron', 'San Isidro'] },
+  { prov: 'CABA', locs: ['Palermo', 'Caballito', 'Recoleta', 'Belgrano', 'Almagro', 'Flores', 'San Telmo', 'Villa Urquiza'] },
+  { prov: 'Cordoba', locs: ['Cordoba Capital', 'Villa Maria', 'Rio Cuarto', 'San Francisco', 'Carlos Paz', 'Alta Gracia'] },
+  { prov: 'Santa Fe', locs: ['Rosario', 'Santa Fe Capital', 'Rafaela', 'Venado Tuerto', 'Reconquista', 'Santo Tome'] },
+  { prov: 'Mendoza', locs: ['Mendoza Capital', 'Godoy Cruz', 'San Rafael', 'Las Heras', 'Lujan de Cuyo', 'Maipu'] },
+  { prov: 'Tucuman', locs: ['San Miguel de Tucuman', 'Tafi Viejo', 'Concepcion', 'Yerba Buena'] },
+  { prov: 'Salta', locs: ['Salta Capital', 'Oran', 'Tartagal', 'General Guemes'] },
+  { prov: 'Entre Rios', locs: ['Parana', 'Concordia', 'Gualeguaychu', 'Concepcion del Uruguay'] },
+  { prov: 'Chaco', locs: ['Resistencia', 'Sanez Pena', 'Villa Angela', 'Charata'] },
+  { prov: 'Neuquen', locs: ['Neuquen Capital', 'Plottier', 'Cutral Co', 'Centenario'] },
+  { prov: 'Jujuy', locs: ['San Salvador de Jujuy', 'Perico', 'Libertador', 'Palpala'] },
+  { prov: 'Misiones', locs: ['Posadas', 'Obera', 'Eldorado', 'Puerto Iguazu'] },
 ];
 
 export const REVIEWS = [
@@ -117,6 +121,12 @@ export const REVIEWS = [
   'Vamos que se puede',
   'Muy serio todo, lo recomiendo',
   'Excelente iniciativa',
+  'Ya quiero ver quien gana!',
+  'Espero tener suerte hoy',
+  'Muy buena la plataforma',
+  'Participando desde el interior, genial',
+  'Siempre quise un sorteo asi',
+  '',
   '',
   '',
   '',
@@ -130,32 +140,40 @@ export function buildDemoParticipants(totalNumbers: number) {
   let index = 0;
   let nameIndex = 0;
 
+  // Mezclar mas los nombres para mayor variedad entre sorteos
+  const poolFirst = shuffle(FIRST_NAMES);
+  const poolLast = shuffle(LAST_NAMES);
+
   while (index < numberPool.length) {
     let nombre = '';
     let apellido = '';
 
-    for (let tries = 0; tries < FIRST_NAMES.length * LAST_NAMES.length; tries += 1) {
-      const base = shuffledNames[nameIndex % shuffledNames.length];
-      const candidateFirst = tries === 0 ? base[0] : FIRST_NAMES[(nameIndex + tries) % FIRST_NAMES.length];
-      const candidateLast = tries === 0 ? base[1] : LAST_NAMES[(nameIndex + tries * 3) % LAST_NAMES.length];
-      const fullName = `${candidateFirst} ${candidateLast}`;
+    // Intentar obtener una combinacion unica
+    for (let tries = 0; tries < 500; tries += 1) {
+      const f = poolFirst[randomInt(0, poolFirst.length - 1)];
+      const l = poolLast[randomInt(0, poolLast.length - 1)];
+      const fullName = `${f} ${l}`;
       if (!usedNames.has(fullName)) {
-        nombre = candidateFirst;
-        apellido = candidateLast;
+        nombre = f;
+        apellido = l;
         usedNames.add(fullName);
         break;
       }
     }
 
+    // Si falla (muy improbable con >6000 combinaciones), usar el pool original
     if (!nombre || !apellido) {
-      throw new Error('No hay suficientes identidades demo unicas para crear el sorteo.');
+      const base = shuffledNames[nameIndex % shuffledNames.length];
+      nombre = base[0];
+      apellido = base[1];
+      nameIndex += 1;
     }
 
     const province = PROVINCES[randomInt(0, PROVINCES.length - 1)];
     const qty = Math.min(randomInt(1, 4), numberPool.length - index);
     const numeros = numberPool.slice(index, index + qty).sort((a, b) => a - b);
     index += qty;
-    nameIndex += 1;
+    
     participants.push({
       nombre,
       apellido,
