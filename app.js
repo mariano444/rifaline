@@ -141,7 +141,7 @@ function clearFormAfterSuccess() {
     document.getElementById(id).value = '';
   });
   document.getElementById('f-prov').value = '';
-  document.getElementById('f-pay').value = 'Galio Pay';
+  document.getElementById('f-pay').value = 'Transferencia';
   selSet.clear();
   updateSummary();
 }
@@ -281,7 +281,7 @@ function updateSummary() {
   if (buttonBusy) return;
 
   btn.disabled = false;
-  txt.innerHTML = `Pagar con Galio Pay - ${count} numero${count > 1 ? 's' : ''} - $${total.toLocaleString('es-AR')}`;
+  txt.innerHTML = `Pagar con Transferencia - ${count} numero${count > 1 ? 's' : ''} - $${total.toLocaleString('es-AR')}`;
   wrap.classList.add('active');
   box.classList.add('show');
   document.getElementById('o-nums').textContent = [...selSet].sort((a, b) => a - b).map(fmt).join(', ');
@@ -334,7 +334,6 @@ function renderParts() {
         <div class="preview${participant.review ? ' show' : ''}">${participant.review ? `"${participant.review}"` : ''}</div>
       </div>
       <div class="pright">
-        <div class="pprice">$${participant.total.toLocaleString('es-AR')}</div>
         <div class="ploc">${participant.pay}</div>
       </div>`;
     list.appendChild(el);
@@ -444,7 +443,7 @@ async function registerParticipant() {
         telefono: formData.phone,
         provincia: formData.prov,
         localidad: formData.loc,
-        metodoPago: 'Galio Pay',
+        metodoPago: 'Transferencia',
         resena: formData.review,
         horaReg: formData.time,
       },
@@ -605,8 +604,15 @@ function revealWinner(winner) {
   document.getElementById('adminCodeDisplay').textContent = currentSecretCode;
   document.getElementById('secretInput').value = '';
   document.getElementById('secretError').classList.remove('show');
+
+  // Resaltar el número ganador en la grilla
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('win-anim'));
   const numberButton = document.getElementById(`n${winner.numero_ganador}`);
-  if (numberButton) numberButton.classList.add('win-anim');
+  if (numberButton) {
+    numberButton.classList.add('win-anim');
+    numberButton.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+
   document.getElementById('winModal').classList.add('show');
   launchConfetti();
 }
