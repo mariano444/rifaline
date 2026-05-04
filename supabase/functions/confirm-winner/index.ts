@@ -1,4 +1,4 @@
-import { adminClient, handleOptions, json } from '../_shared/helpers.ts';
+import { adminClient, fetchCurrentState, handleOptions, json } from '../_shared/helpers.ts';
 
 Deno.serve(async (req) => {
   const options = handleOptions(req);
@@ -30,7 +30,10 @@ Deno.serve(async (req) => {
       .eq('id', sorteoId);
 
     if (raffleUpdateError) throw raffleUpdateError;
-    return json({ ok: true });
+
+    // Obtener el nuevo estado (esto creará el próximo sorteo si no hay uno activo)
+    const newState = await fetchCurrentState(supabase);
+    return json({ ok: true, ...newState });
   } catch (error) {
     return json({ error: error.message || 'confirm-winner failed' }, 500);
   }
