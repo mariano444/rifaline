@@ -396,14 +396,7 @@ textarea.fc{resize:vertical;min-height:80px}
 <!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
-  <div class="loading-title">Preparando sorteo</div>
-  <div class="loading-sub">Configurando el sorteo con participantes verificados. Toma solo un momento...</div>
-  <div class="loading-steps">
-    <div class="ls" id="ls1"><div class="ls-dot"></div>Generando números aleatorios</div>
-    <div class="ls" id="ls2"><div class="ls-dot"></div>Cargando participantes</div>
-    <div class="ls" id="ls3"><div class="ls-dot"></div>Configurando premio del sorteo</div>
-    <div class="ls" id="ls4"><div class="ls-dot"></div>Todo listo</div>
-  </div>
+  <div class="loading-title">Cargando sorteo</div>
 </div>
 
 <!-- DRAW MODAL — AUTOMÁTICO -->
@@ -1059,13 +1052,11 @@ async function initSorteo(){
     demoNums=new Set(saved.demoNums||[]);
     realNums=new Set(saved.realNums||[]);
 
-    setLS('ls1','done'); setLS('ls2','done'); setLS('ls3','done'); setLS('ls4','active');
     document.getElementById('heroPrize').textContent=fmtPrize(currentPrize);
     document.getElementById('wPrize').textContent=fmtPrize(currentPrize);
     updateLastWinnerBanner();
     buildGrid(); updateStats(); renderParts(); updateSummary(); updateLiveCnt();
     await new Promise(r=>setTimeout(r,300));
-    setLS('ls4','done');
     document.getElementById('loadingOverlay').classList.add('hidden');
     return;
   }
@@ -1074,7 +1065,6 @@ async function initSorteo(){
   demoNums=new Set(); realNums=new Set();
   demoList=[]; realList=[];
 
-  setLS('ls1','active');
   currentPrize=generatePrize();
   currentSecretCode=generateCode();
   sorteoId='sorteo_'+Date.now();
@@ -1083,16 +1073,12 @@ async function initSorteo(){
   document.getElementById('heroPrize').textContent=fmtPrize(currentPrize);
   document.getElementById('wPrize').textContent=fmtPrize(currentPrize);
 
-  setLS('ls1','done'); setLS('ls2','active');
-
   // Slots reales: 20-40 números libres
   const realSlots=Math.floor(Math.random()*21)+20;
   const demoCount=TOTAL-realSlots;
 
   // Usar FALLBACK LOCAL siempre (instantáneo, sin API, sin 429)
   let raw=buildFallbackParticipants(demoCount);
-
-  setLS('ls2','done'); setLS('ls3','active');
 
   // Asignar números aleatoriamente
   const pool=Array.from({length:TOTAL},(_,i)=>i+1).sort(()=>Math.random()-.5);
@@ -1116,8 +1102,6 @@ async function initSorteo(){
     });
   }
 
-  setLS('ls3','done'); setLS('ls4','active');
-
   // Guardar estado del sorteo para que participantes queden fijos
   await saveSorteoState(false);
 
@@ -1127,7 +1111,6 @@ async function initSorteo(){
   buildGrid(); updateStats(); renderParts(); updateSummary(); updateLiveCnt();
 
   await new Promise(r=>setTimeout(r,400)); // pausa mínima para mostrar loading
-  setLS('ls4','done');
   document.getElementById('loadingOverlay').classList.add('hidden');
 }
 
@@ -1277,7 +1260,6 @@ function renderParts(){
       </div>
       <div class="pright">
         <div class="pprice">$${p.total.toLocaleString('es-AR')}</div>
-        <div class="ploc">${p.pay}</div>
       </div>`;
     list.appendChild(el);
   });
