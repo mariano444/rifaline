@@ -9,7 +9,7 @@ const supabaseClient = window.supabase.createClient(
   }
 );
 
-const WA_NUMBER = '5493516000000';
+const WA_NUMBER = '3518757751';
 const WA_MSG_CONSULTA = encodeURIComponent('Hola, tengo una consulta sobre el sorteo');
 const WA_MSG_PARTICIPAR = encodeURIComponent('Hola, quiero participar en el sorteo');
 
@@ -328,7 +328,6 @@ function renderParts() {
         <div class="preview${participant.review ? ' show' : ''}">${participant.review ? `"${participant.review}"` : ''}</div>
       </div>
       <div class="pright">
-        <div class="pprice">$${participant.total.toLocaleString('es-AR')}</div>
       </div>`;
     list.appendChild(el);
   });
