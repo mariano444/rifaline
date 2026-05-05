@@ -187,7 +187,6 @@ function applyRaffleState(payload) {
 async function loadRaffleState(showLoader) {
   if (showLoader) {
     document.getElementById('loadingOverlay').classList.remove('hidden');
-    setLS('ls1', 'active');
   }
 
   try {
@@ -195,12 +194,7 @@ async function loadRaffleState(showLoader) {
     if (!data || !data.raffle) {
       throw new Error('No se pudo obtener el sorteo activo.');
     }
-    setLS('ls1', 'done');
-    setLS('ls2', 'done');
-    setLS('ls3', 'done');
-    setLS('ls4', 'active');
     applyRaffleState(data);
-    setLS('ls4', 'done');
   } finally {
     if (showLoader) {
       window.setTimeout(() => {
@@ -334,7 +328,7 @@ function renderParts() {
         <div class="preview${participant.review ? ' show' : ''}">${participant.review ? `"${participant.review}"` : ''}</div>
       </div>
       <div class="pright">
-        <div class="ploc">${participant.pay}</div>
+        <div class="pprice">$${participant.total.toLocaleString('es-AR')}</div>
       </div>`;
     list.appendChild(el);
   });
