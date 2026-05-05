@@ -60,14 +60,15 @@ Deno.serve(async (req) => {
     const payload = {
       items: [
         {
-          title: `SORTEO.AR - ${numeros.length} numero(s)`,
+          title: `Numeros`,
           quantity: 1,
           unitPrice: totalPagado,
           currencyId: 'ARS',
         },
       ],
       referenceId,
-      sandbox: Deno.env.get('GALIO_SANDBOX') === 'true',
+      // Force live payments for production checkouts.
+      sandbox: false,
       notificationUrl: Deno.env.get('GALIO_WEBHOOK_URL') || undefined,
       backUrl: successUrl || failureUrl ? { success: successUrl, failure: failureUrl } : undefined,
     };
