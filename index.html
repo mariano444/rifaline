@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SORTEO — Premio Millonario Garantizado</title>
-  <script>document.documentElement.classList.add('js-enabled');</script>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -23,8 +22,8 @@ html{scroll-behavior:smooth}
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
 /* ANIMATIONS */
-.js-enabled [data-reveal]{opacity:0;transform:translateY(20px);transition:all .8s cubic-bezier(0.2, 0.8, 0.2, 1);will-change:opacity, transform}
-.js-enabled [data-reveal].revealed{opacity:1;transform:translateY(0)}
+.reveal-ready [data-reveal]{opacity:0;transform:translateY(20px);transition:all .8s cubic-bezier(0.2, 0.8, 0.2, 1);will-change:opacity, transform}
+.reveal-ready [data-reveal].revealed{opacity:1;transform:translateY(0)}
 
 /* NOTIFICATIONS */
 .notif-container{position:fixed;bottom:24px;left:24px;z-index:1000;display:flex;flex-direction:column;gap:12px;pointer-events:none}
@@ -1290,6 +1289,9 @@ function updateStats(){
 // SCROLL REVEAL
 function initReveal() {
   const revealElements = document.querySelectorAll('[data-reveal]');
+  if (!revealElements.length) return;
+
+  document.documentElement.classList.add('reveal-ready');
   
   // Función para mostrar todo (emergencia)
   const revealAll = () => {
