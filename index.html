@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SORTEO — Premio Millonario Garantizado</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js-enabled');</script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#040206;--bg2:#08050e;--bg3:#0d071a;
@@ -26,8 +27,8 @@ html{scroll-behavior:smooth}
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
 /* ANIMATIONS */
-[data-reveal]{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(0.2, 0.8, 0.2, 1)}
-[data-reveal].revealed{opacity:1;transform:translateY(0)}
+.js-enabled [data-reveal]{opacity:0;transform:translateY(20px);transition:all .8s cubic-bezier(0.2, 0.8, 0.2, 1);will-change:opacity, transform}
+.js-enabled [data-reveal].revealed{opacity:1;transform:translateY(0)}
 
 /* NOTIFICATIONS */
 .notif-container{position:fixed;bottom:24px;left:24px;z-index:1000;display:flex;flex-direction:column;gap:12px;pointer-events:none}
@@ -723,7 +724,7 @@ src="https://www.facebook.com/tr?id=675114246370648&ev=PageView&noscript=1"
   </div>
 
   <!-- GRILLA 300 NÚMEROS -->
-  <div class="card" id="numGrid" data-reveal>
+  <div class="card" data-reveal>
     <div class="card-title">ELEGÍ TUS NÚMEROS DE LA SUERTE</div>
     <div class="grid-controls">
       <div class="legend">
@@ -1294,9 +1295,14 @@ function updateStats(){
 function initReveal() {
   const revealElements = document.querySelectorAll('[data-reveal]');
   
+  // Función para mostrar todo (emergencia)
+  const revealAll = () => {
+    revealElements.forEach(el => el.classList.add('revealed'));
+  };
+
   // Si el navegador no soporta IntersectionObserver, mostrar todo de una
   if (!window.IntersectionObserver) {
-    revealElements.forEach(el => el.classList.add('revealed'));
+    revealAll();
     return;
   }
 
@@ -1304,21 +1310,26 @@ function initReveal() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('revealed');
+        // Dejar de observar una vez revelado
+        observer.unobserve(entry.target);
       }
     });
   }, { 
-    threshold: 0.05, // Umbral más bajo para asegurar que se active rápido
-    rootMargin: '0px 0px -50px 0px' 
+    threshold: 0.01, // Umbral mínimo
+    rootMargin: '0px 0px 100px 0px' // Revelar un poco antes de que entre al viewport
   });
 
   revealElements.forEach(el => {
-    // Si el elemento ya está visible o cerca de la parte superior, mostrarlo de inmediato
+    observer.observe(el);
+    // Chequeo manual inmediato
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight) {
       el.classList.add('revealed');
     }
-    observer.observe(el);
   });
+
+  // FAIL-SAFE: Si después de 3 segundos algo sigue oculto, mostrarlo todo
+  setTimeout(revealAll, 3000);
 }
 
 // NOTIFICACIONES SIMULADAS
@@ -1352,8 +1363,11 @@ function showFakePurchase() {
 }
 
 // Iniciar al cargar
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
   initReveal();
+});
+
+window.addEventListener('load', () => {
   setTimeout(showFakePurchase, 4000);
 });
 
