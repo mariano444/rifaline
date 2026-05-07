@@ -1024,53 +1024,6 @@ src="https://www.facebook.com/tr?id=675114246370648&ev=PageView&noscript=1"
 </div>
 
 <script>
-// ═══════════════════════════════════════════
-//  CONFIGURACIÓN & STORAGE
-// ═══════════════════════════════════════════
-const WA_NUMBER = '3518757751';
-const DB = window.DB = {
-  async get(k){
-    try{ const v=localStorage.getItem('sorteo_'+k); return v?JSON.parse(v):null; }
-    catch(e){ console.error('DB get error', e); return null; }
-  },
-  async set(k,v){
-    try{ localStorage.setItem('sorteo_'+k,JSON.stringify(v)); }
-    catch(e){ console.error('DB set error', e); }
-  }
-};
-
-// ═══════════════════════════════════════════
-//  ESTADO GLOBAL
-// ═══════════════════════════════════════════
-const TOTAL = 300;
-let demoNums=new Set(), realNums=new Set(), selSet=new Set();
-let demoList=[], realList=[];
-let drawDone=false, sorteoId=null, pendingWinner=null;
-let currentPrize=0, currentSecretCode='';
-
-const takenSet=()=>{ const s=new Set(); demoNums.forEach(n=>s.add(n)); realNums.forEach(n=>s.add(n)); return s; };
-const fmt=n=>n<10?'00'+n:n<100?'0'+n:''+n;
-
-function generatePrize(){ return (Math.floor(Math.random()*41)+10)*100000; }
-function fmtPrize(n){ return '$'+(n||0).toLocaleString('es-AR'); }
-function generateCode(){
-  const c='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
-  return Array.from({length:8},()=>c[Math.floor(Math.random()*c.length)]).join('');
-}
-
-function calcDisplay(){
-  const n=selSet.size;
-  if(n===0) return {unit:0,total:0,tier:null};
-  if(n<=2)  return {unit:2500,total:n*2500,tier:'1'};
-  if(n<=4) return {unit:2000,total:n*2000,tier:'3'};
-  return {unit:1400,total:n*1400,tier:'5'};
-}
-function calcTotal(qty){
-  if(qty<=2) return qty*2500;
-  if(qty<=4) return qty*2000;
-  return qty*1400;
-}
-
 function highlightTier(t){
   ['1','3','5'].forEach(x=>{const e=document.getElementById('tier-'+x);if(e)e.classList.remove('sel');});
   if(t){const e=document.getElementById('tier-'+t);if(e)e.classList.add('sel');}
@@ -1209,12 +1162,8 @@ async function initSorteo(){
     demoNums=new Set(saved.demoNums||[]);
     realNums=new Set(saved.realNums||[]);
 
-    const prizeStr = fmtPrize(currentPrize);
-    document.getElementById('heroPrize').textContent = prizeStr;
-    document.getElementById('wPrize').textContent = prizeStr;
-    const sbP = document.getElementById('sbPrize');
-    if(sbP) sbP.textContent = prizeStr;
-
+    document.getElementById('heroPrize').textContent=fmtPrize(currentPrize);
+    document.getElementById('wPrize').textContent=fmtPrize(currentPrize);
     updateLastWinnerBanner();
     buildGrid(); updateStats(); renderParts(); updateSummary(); updateLiveCnt();
     await new Promise(r=>setTimeout(r,300));
@@ -1231,11 +1180,8 @@ async function initSorteo(){
   sorteoId='sorteo_'+Date.now();
 
   // Actualizar UI premio
-  const prizeStr = fmtPrize(currentPrize);
-  document.getElementById('heroPrize').textContent = prizeStr;
-  document.getElementById('wPrize').textContent = prizeStr;
-  const sbP = document.getElementById('sbPrize');
-  if(sbP) sbP.textContent = prizeStr;
+  document.getElementById('heroPrize').textContent=fmtPrize(currentPrize);
+  document.getElementById('wPrize').textContent=fmtPrize(currentPrize);
 
   // Slots reales: 20-40 números libres
   const realSlots=Math.floor(Math.random()*21)+20;
@@ -1770,14 +1716,8 @@ function launchConfetti(){
 //  BOOT
 // ═══════════════════════════════════════════
 (async()=>{
-  try {
-    await renderWinnerHistory();
-    await initSorteo();
-  } catch (e) {
-    console.error('Boot error:', e);
-    // Intentar inicializar al menos el sorteo si el historial falla
-    await initSorteo().catch(err => console.error('Full init fail:', err));
-  }
+  await renderWinnerHistory();
+  await initSorteo();
 })();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
