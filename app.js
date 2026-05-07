@@ -88,7 +88,11 @@ function highlightTier(tier) {
 }
 
 function updateLiveCnt() {
-  document.getElementById('live-cnt').textContent = `+${Math.floor(Math.random() * 15) + 6} personas`;
+  const cnt = Math.floor(Math.random() * 15) + 12;
+  const liveCntEl = document.getElementById('live-cnt');
+  const liveSuffixEl = document.getElementById('live-text-suffix');
+  if (liveCntEl) liveCntEl.textContent = `+${cnt} personas`;
+  if (liveSuffixEl) liveSuffixEl.textContent = ' están viendo para seleccionar su número ¡no te quedes afuera!';
   window.clearTimeout(liveTimer);
   liveTimer = window.setTimeout(updateLiveCnt, Math.random() * 16000 + 9000);
 }
@@ -220,7 +224,8 @@ function buildGrid() {
     frag.appendChild(button);
   }
   grid.appendChild(frag);
-  document.getElementById('numSearch').max = TOTAL;
+  const searchInput = document.getElementById('numSearch');
+  if (searchInput) searchInput.max = TOTAL;
 }
 
 function updateStats() {
