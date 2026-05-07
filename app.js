@@ -261,32 +261,41 @@ function updateSummary() {
   const { unit, total, tier } = calcDisplay();
 
   highlightTier(tier);
-  hint.textContent =
-    count > 0
-      ? `${count} numero${count > 1 ? 's' : ''} seleccionado${count > 1 ? 's' : ''} - completa tu pago para confirmar`
-      : 'Toca cualquier numero libre para reservarlo';
-  hint.style.color = count > 0 ? 'var(--gold)' : 'var(--text3)';
-  hint.style.fontWeight = count > 0 ? '800' : '400';
+  if (hint) {
+    hint.textContent =
+      count > 0
+        ? `${count} número${count > 1 ? 's' : ''} seleccionado${count > 1 ? 's' : ''} - completá tu registro para participar`
+        : 'Tocá cualquier número libre para reservarlo';
+    hint.style.color = count > 0 ? 'var(--gold)' : 'var(--text3)';
+    hint.style.fontWeight = count > 0 ? '800' : '400';
+  }
 
   if (count === 0) {
-    btn.disabled = true;
-    txt.innerHTML =
-      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> Selecciona al menos 1 numero para participar';
-    box.classList.remove('show');
-    wrap.classList.remove('active');
+    if (btn) btn.disabled = true;
+    if (txt)
+      txt.innerHTML =
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> Seleccioná al menos 1 número para participar';
+    if (box) box.classList.remove('show');
+    if (wrap) wrap.classList.remove('active');
     return;
   }
 
   if (buttonBusy) return;
 
-  btn.disabled = false;
-  txt.innerHTML = `Pagar con Transferencia - ${count} numero${count > 1 ? 's' : ''} - $${total.toLocaleString('es-AR')}`;
-  wrap.classList.add('active');
-  box.classList.add('show');
-  document.getElementById('o-nums').textContent = [...selSet].sort((a, b) => a - b).map(fmt).join(', ');
-  document.getElementById('o-unit').textContent = `$${unit.toLocaleString('es-AR')} c/u`;
-  document.getElementById('o-qty').textContent = count;
-  document.getElementById('o-total').textContent = `$${total.toLocaleString('es-AR')}`;
+  if (btn) btn.disabled = false;
+  if (txt) txt.innerHTML = `🎟️ ¡QUIERO GANAR AHORA! — ${count} número${count > 1 ? 's' : ''} · $${total.toLocaleString('es-AR')}`;
+  if (wrap) wrap.classList.add('active');
+  if (box) box.classList.add('show');
+  
+  const oNums = document.getElementById('o-nums');
+  const oUnit = document.getElementById('o-unit');
+  const oQty = document.getElementById('o-qty');
+  const oTotal = document.getElementById('o-total');
+  
+  if (oNums) oNums.textContent = [...selSet].sort((a, b) => a - b).map(fmt).join(', ');
+  if (oUnit) oUnit.textContent = `$${unit.toLocaleString('es-AR')} c/u`;
+  if (oQty) oQty.textContent = count;
+  if (oTotal) oTotal.textContent = `$${total.toLocaleString('es-AR')}`;
 }
 
 function toggleNum(n) {
