@@ -643,7 +643,7 @@ src="https://www.facebook.com/tr?id=675114246370648&ev=PageView&noscript=1"
   <!-- LIVE -->
   <div class="live-bar">
     <div class="live-dot"></div>
-    <div class="live-text"><strong id="live-cnt">+12 personas</strong> están viendo este sorteo ahora mismo</div>
+    <div class="live-text"><strong id="live-cnt">+12 personas</strong><span id="live-text-suffix"> están viendo este sorteo ahora mismo</span></div>
   </div>
 
   <!-- TRUST -->
@@ -1368,7 +1368,9 @@ function updateSummary(){
 //  LIVE VIEWERS
 // ═══════════════════════════════════════════
 function updateLiveCnt(){
-  document.getElementById('live-cnt').textContent='+'+(Math.floor(Math.random()*15)+6)+' personas';
+  const cnt = Math.floor(Math.random()*15)+12;
+  document.getElementById('live-cnt').textContent=`+${cnt} personas`;
+  document.getElementById('live-text-suffix').textContent=' están viendo para seleccionar su número ¡no te quedes afuera!';
   setTimeout(updateLiveCnt,Math.random()*16000+9000);
 }
 
