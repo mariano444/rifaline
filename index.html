@@ -118,17 +118,23 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .sv.acc{color:var(--purple2);text-shadow:0 0 25px rgba(179,136,255,.3)}
 .sl{font-size:11px;font-weight:800;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-top:6px}
 
-/* TESTIMONIOS RÁPIDOS */
-.testi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:22px 0;align-items:stretch}
-.testi-row::-webkit-scrollbar{display:none}
-.testi-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 18px;min-width:0;height:100%}
-.testi-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.testi-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
-.testi-name{font-size:12px;font-weight:700}
-.testi-loc{font-size:10px;color:var(--text3)}
-.testi-stars{color:var(--gold);font-size:11px;letter-spacing:1px}
-.testi-text{font-size:11px;color:var(--text2);line-height:1.6;font-style:italic}
-.testi-date{font-size:9px;color:var(--text3);margin-top:6px;font-weight:600}
+/* TESTIMONIOS RÁPIDOS (CAROUSEL) */
+.testi-carousel-container{position:relative;width:100%;overflow:hidden;margin:24px 0;padding:10px 0}
+.testi-track{display:flex;gap:15px;width:max-content;animation:scroll 40s linear infinite}
+.testi-track:hover{animation-play-state:paused}
+.testi-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px 20px;width:300px;flex-shrink:0;border-left:4px solid var(--emerald);transition:transform .3s ease}
+.testi-card:hover{transform:translateY(-5px);border-color:var(--gold)}
+
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(calc(-50% - 7.5px))}}
+
+.testi-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.testi-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple2));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0}
+.testi-name{font-size:13px;font-weight:700;color:var(--text)}
+.testi-loc{font-size:11px;color:var(--text3)}
+.testi-check{display:inline-flex;align-items:center;gap:4px;color:var(--emerald);font-size:10px;font-weight:800;margin-top:2px}
+.testi-stars{color:var(--gold);font-size:12px;letter-spacing:1px;margin:4px 0}
+.testi-text{font-size:12px;color:var(--text2);line-height:1.6;font-style:italic}
+.testi-date{font-size:10px;color:var(--text3);margin-top:8px;font-weight:600}
 
 /* SCARCITY */
 .scarcity-block{background:linear-gradient(135deg,rgba(255,45,85,.06),rgba(255,77,28,.03));border:1px solid rgba(255,45,85,.16);border-radius:22px;padding:22px 26px;margin:22px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -590,61 +596,120 @@ src="https://www.facebook.com/tr?id=675114246370648&ev=PageView&noscript=1"
     </div>
   </div>
 
-  <!-- TESTIMONIOS -->
-  <div class="testi-row" id="testiRow" data-reveal>
-    <div class="testi-card">
-      <div class="testi-top"><div class="testi-av">VR</div><div><div class="testi-name">Valentina Ríos</div><div class="testi-loc">Córdoba Capital</div><div class="testi-check">✓ Ganadora Verificada</div></div></div>
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"¡No lo podía creer! Me avisaron por WhatsApp y al ratito tenía el dinero. Todo muy serio."</div>
-      <div class="testi-date">Sorteo #48 · $2.100.000</div>
-    </div>
-    <div class="testi-card">
-      <div class="testi-top"><div class="testi-av">FM</div><div><div class="testi-name">Facundo Medina</div><div class="testi-loc">Rosario, Santa Fe</div><div class="testi-check">✓ Ganador Verificado</div></div></div>
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"Participé tres veces, la segunda gané. El código llegó al toque y el premio también."</div>
-      <div class="testi-date">Sorteo #35 · $3.500.000</div>
-    </div>
-    <div class="testi-card">
-      <div class="testi-top"><div class="testi-av">LC</div><div><div class="testi-name">Luciana Castro</div><div class="testi-loc">Mendoza Capital</div><div class="testi-check">✓ Participante Verificada</div></div></div>
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"Muy transparente todo. Ves la lista de participantes en tiempo real, da mucha confianza."</div>
-      <div class="testi-date">Sorteo #52 · Participando</div>
-    </div>
-    <div class="testi-card">
-      <div class="testi-top"><div class="testi-av">MG</div><div><div class="testi-name">Mariana Gómez</div><div class="testi-loc">La Plata, Buenos Aires</div><div class="testi-check">✓ Ganadora Verificada</div></div></div>
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"Me pasaron el comprobante, validé el código y esa misma tarde ya tenía acreditado el premio."</div>
-      <div class="testi-date">Sorteo #44 · $1.800.000</div>
-    </div>
-    <div class="testi-card">
-      <div class="testi-top"><div class="testi-av">JP</div><div><div class="testi-name">Julián Paredes</div><div class="testi-loc">San Miguel de Tucumán</div><div class="testi-check">✓ Ganador Verificado</div></div></div>
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"Pensé que era imposible hasta que vi mi número salir. Muy buena atención por WhatsApp y cero vueltas."</div>
-      <div class="testi-date">Sorteo #41 · $2.700.000</div>
-    </div>
-    <div class="testi-card">
-      <div class="testi-top"><div class="testi-av">AS</div><div><div class="testi-name">Antonella Suárez</div><div class="testi-loc">Salta Capital</div><div class="testi-check">✓ Participante Verificada</div></div></div>
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"Lo mejor es que ves enseguida qué números siguen libres y el registro se hace rapidísimo."</div>
-      <div class="testi-date">Sorteo #53 · Participando</div>
-    </div>
-    <div class="testi-card">
-      <div class="testi-top"><div class="testi-av">NB</div><div><div class="testi-name">Nicolás Benítez</div><div class="testi-loc">Neuquén Capital</div><div class="testi-check">✓ Ganador Verificado</div></div></div>
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"Elegí cinco números, me confirmaron todo al instante y terminé cobrando al día siguiente. Recomiendo."</div>
-      <div class="testi-date">Sorteo #39 · $4.200.000</div>
-    </div>
-    <div class="testi-card">
-      <div class="testi-top"><div class="testi-av">CR</div><div><div class="testi-name">Camila Ruiz</div><div class="testi-loc">Paraná, Entre Ríos</div><div class="testi-check">✓ Ganadora Verificada</div></div></div>
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"Tenía dudas antes de entrar, pero cuando vi a los demás participantes y los ganadores anteriores me convencí."</div>
-      <div class="testi-date">Sorteo #46 · $2.300.000</div>
-    </div>
-    <div class="testi-card">
-      <div class="testi-top"><div class="testi-av">DT</div><div><div class="testi-name">Diego Torres</div><div class="testi-loc">CABA</div><div class="testi-check">✓ Participante Verificado</div></div></div>
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"El proceso de pago fue claro y el número quedó reservado al momento. Eso da mucha tranquilidad."</div>
-      <div class="testi-date">Sorteo #54 · Participando</div>
+  <!-- TESTIMONIOS CAROUSEL -->
+  <div class="testi-carousel-container" data-reveal>
+    <div class="testi-track" id="testiTrack">
+      <!-- Original Cards -->
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">VR</div><div><div class="testi-name">Valentina Ríos</div><div class="testi-loc">Córdoba Capital</div><div class="testi-check">✓ Ganadora Verificada</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"¡No lo podía creer! Me avisaron por WhatsApp y al ratito tenía el dinero. Todo muy serio."</div>
+        <div class="testi-date">Sorteo #48 · $2.100.000</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">FM</div><div><div class="testi-name">Facundo Medina</div><div class="testi-loc">Rosario, Santa Fe</div><div class="testi-check">✓ Ganador Verificado</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Participé tres veces, la segunda gané. El código llegó al toque y el premio también."</div>
+        <div class="testi-date">Sorteo #35 · $3.500.000</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">LC</div><div><div class="testi-name">Luciana Castro</div><div class="testi-loc">Mendoza Capital</div><div class="testi-check">✓ Participante Verificada</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Muy transparente todo. Ves la lista de participantes en tiempo real, da mucha confianza."</div>
+        <div class="testi-date">Sorteo #52 · Participando</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">MG</div><div><div class="testi-name">Mariana Gómez</div><div class="testi-loc">La Plata, Buenos Aires</div><div class="testi-check">✓ Ganadora Verificada</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Me pasaron el comprobante, validé el código y esa misma tarde ya tenía acreditado el premio."</div>
+        <div class="testi-date">Sorteo #44 · $1.800.000</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">JP</div><div><div class="testi-name">Julián Paredes</div><div class="testi-loc">San Miguel de Tucumán</div><div class="testi-check">✓ Ganador Verificado</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Pensé que era imposible hasta que vi mi número salir. Muy buena atención por WhatsApp y cero vueltas."</div>
+        <div class="testi-date">Sorteo #41 · $2.700.000</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">AS</div><div><div class="testi-name">Antonella Suárez</div><div class="testi-loc">Salta Capital</div><div class="testi-check">✓ Participante Verificada</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Lo mejor es que ves enseguida qué números siguen libres y el registro se hace rapidísimo."</div>
+        <div class="testi-date">Sorteo #53 · Participando</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">NB</div><div><div class="testi-name">Nicolás Benítez</div><div class="testi-loc">Neuquén Capital</div><div class="testi-check">✓ Ganador Verificado</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Elegí cinco números, me confirmaron todo al instante y terminé cobrando al día siguiente. Recomiendo."</div>
+        <div class="testi-date">Sorteo #39 · $4.200.000</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">CR</div><div><div class="testi-name">Camila Ruiz</div><div class="testi-loc">Paraná, Entre Ríos</div><div class="testi-check">✓ Ganadora Verificada</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Tenía dudas antes de entrar, pero cuando vi a los demás participantes y los ganadores anteriores me convencí."</div>
+        <div class="testi-date">Sorteo #46 · $2.300.000</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">DT</div><div><div class="testi-name">Diego Torres</div><div class="testi-loc">CABA</div><div class="testi-check">✓ Participante Verificado</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"El proceso de pago fue claro y el número quedó reservado al momento. Eso da mucha tranquilidad."</div>
+        <div class="testi-date">Sorteo #54 · Participando</div>
+      </div>
+      
+      <!-- Cloned Cards for Infinite Loop -->
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">VR</div><div><div class="testi-name">Valentina Ríos</div><div class="testi-loc">Córdoba Capital</div><div class="testi-check">✓ Ganadora Verificada</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"¡No lo podía creer! Me avisaron por WhatsApp y al ratito tenía el dinero. Todo muy serio."</div>
+        <div class="testi-date">Sorteo #48 · $2.100.000</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">FM</div><div><div class="testi-name">Facundo Medina</div><div class="testi-loc">Rosario, Santa Fe</div><div class="testi-check">✓ Ganador Verificado</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Participé tres veces, la segunda gané. El código llegó al toque y el premio también."</div>
+        <div class="testi-date">Sorteo #35 · $3.500.000</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">LC</div><div><div class="testi-name">Luciana Castro</div><div class="testi-loc">Mendoza Capital</div><div class="testi-check">✓ Participante Verificada</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Muy transparente todo. Ves la lista de participantes en tiempo real, da mucha confianza."</div>
+        <div class="testi-date">Sorteo #52 · Participando</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">MG</div><div><div class="testi-name">Mariana Gómez</div><div class="testi-loc">La Plata, Buenos Aires</div><div class="testi-check">✓ Ganadora Verificada</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Me pasaron el comprobante, validé el código y esa misma tarde ya tenía acreditado el premio."</div>
+        <div class="testi-date">Sorteo #44 · $1.800.000</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">JP</div><div><div class="testi-name">Julián Paredes</div><div class="testi-loc">San Miguel de Tucumán</div><div class="testi-check">✓ Ganador Verificado</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Pensé que era imposible hasta que vi mi número salir. Muy buena atención por WhatsApp y cero vueltas."</div>
+        <div class="testi-date">Sorteo #41 · $2.700.000</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">AS</div><div><div class="testi-name">Antonella Suárez</div><div class="testi-loc">Salta Capital</div><div class="testi-check">✓ Participante Verificada</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Lo mejor es que ves enseguida qué números siguen libres y el registro se hace rapidísimo."</div>
+        <div class="testi-date">Sorteo #53 · Participando</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">NB</div><div><div class="testi-name">Nicolás Benítez</div><div class="testi-loc">Neuquén Capital</div><div class="testi-check">✓ Ganador Verificado</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Elegí cinco números, me confirmaron todo al instante y terminé cobrando al día siguiente. Recomiendo."</div>
+        <div class="testi-date">Sorteo #39 · $4.200.000</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">CR</div><div><div class="testi-name">Camila Ruiz</div><div class="testi-loc">Paraná, Entre Ríos</div><div class="testi-check">✓ Ganadora Verificada</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Tenía dudas antes de entrar, pero cuando vi a los demás participantes y los ganadores anteriores me convencí."</div>
+        <div class="testi-date">Sorteo #46 · $2.300.000</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-top"><div class="testi-av">DT</div><div><div class="testi-name">Diego Torres</div><div class="testi-loc">CABA</div><div class="testi-check">✓ Participante Verificado</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"El proceso de pago fue claro y el número quedó reservado al momento. Eso da mucha tranquilidad."</div>
+        <div class="testi-date">Sorteo #54 · Participando</div>
+      </div>
     </div>
   </div>
 
@@ -945,7 +1010,7 @@ src="https://www.facebook.com/tr?id=675114246370648&ev=PageView&noscript=1"
   </div>
 
   <!-- FOOTER TRUST -->
-  <div style="text-align:center;padding:32px 0;border-top:1px solid var(--border);margin-top:8px">
+  <div style="text-align:center;padding:32px 0;border-top:1px solid var(--border);margin-top:8px;margin-bottom:0">
     <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:4px;margin-bottom:10px">SORTEO<em style="color:var(--gold);font-style:normal">.</em>AR</div>
     <div style="font-size:12px;color:var(--text3);line-height:2;max-width:480px;margin:0 auto">
       Sorteo legal · SSL cifrado · +54 premios entregados en 2025<br>
@@ -953,85 +1018,6 @@ src="https://www.facebook.com/tr?id=675114246370648&ev=PageView&noscript=1"
     </div>
   </div>
 </div>
-
-<script type="text/plain" id="legacy-app-script">
-// ═══════════════════════════════════════════
-//  STORAGE — window.storage (Claude) o localStorage
-// ═══════════════════════════════════════════
-// ══════════════════════════════════════════
-//  CONFIGURACIÓN — cambiá tu número de WhatsApp aquí
-// ══════════════════════════════════════════
-const WA_NUMBER = '3518757751'; // ← reemplazá con tu número (cód.país + cód.área + número)
-const WA_MSG_CONSULTA = encodeURIComponent('Hola, tengo una consulta sobre el sorteo 🎟️');
-const WA_MSG_PARTICIPAR = encodeURIComponent('Hola, quiero participar en el sorteo 🎟️');
-
-// Asignar links de WA al cargar
-window.addEventListener('DOMContentLoaded', ()=>{
-  const waUrl = n => `https://wa.me/${WA_NUMBER}?text=${n}`;
-  document.querySelectorAll('[data-wa]').forEach(el=>{
-    const msg = el.dataset.wa === 'participar' ? WA_MSG_PARTICIPAR : WA_MSG_CONSULTA;
-    el.href = waUrl(msg);
-  });
-});
-
-const DB = {
-  async get(k){
-    try{
-      const v=localStorage.getItem('sorteo_'+k);
-      return v?JSON.parse(v):null;
-    }catch(e){ return null; }
-  },
-  async set(k,v){
-    try{
-      localStorage.setItem('sorteo_'+k,JSON.stringify(v));
-    }catch(e){ console.warn('storage err',e); }
-  }
-};
-
-// ═══════════════════════════════════════════
-//  ESTADO
-// ═══════════════════════════════════════════
-const TOTAL = 300;
-let demoNums=new Set(), realNums=new Set(), selSet=new Set();
-let demoList=[], realList=[];
-let drawDone=false, sorteoId=null, pendingWinner=null;
-let currentPrize=0, currentSecretCode='';
-
-const takenSet=()=>{ const s=new Set(); demoNums.forEach(n=>s.add(n)); realNums.forEach(n=>s.add(n)); return s; };
-const fmt=n=>n<10?'00'+n:n<100?'0'+n:''+n;
-
-// ═══════════════════════════════════════════
-//  PREMIO ALEATORIO (entero redondo, múltiplos de $100.000)
-// ═══════════════════════════════════════════
-function generatePrize(){
-  return (Math.floor(Math.random()*41)+10)*100000; // $1M a $5M en pasos de $100k
-}
-function fmtPrize(n){ return '$'+n.toLocaleString('es-AR'); }
-
-// ═══════════════════════════════════════════
-//  CÓDIGO SECRETO (8 chars, sin O/0/I/1/L)
-// ═══════════════════════════════════════════
-function generateCode(){
-  const c='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
-  return Array.from({length:8},()=>c[Math.floor(Math.random()*c.length)]).join('');
-}
-
-// ═══════════════════════════════════════════
-//  PRECIOS
-// ═══════════════════════════════════════════
-function calcDisplay(){
-  const n=selSet.size;
-  if(n===0) return {unit:0,total:0,tier:null};
-  if(n===1) return {unit:2500,total:2500,tier:'1'};
-  if(n<=2)  return {unit:2500,total:n*2500,tier:'1'};
-  if(n===3) return {unit:2000,total:6000,tier:'3'};
-  if(n===4) return {unit:2000,total:n*2000,tier:'3'};
-  return {unit:1400,total:n*1400,tier:'5'};
-}
-function calcTotal(qty){
-  if(qty<=2) return qty*2500;
-  if(qty<=4) return qty*2000;
-  return qty*1400;
 }
 function highlightTier(t){
   ['1','3','5'].forEach(x=>{const e=document.getElementById('tier-'+x);if(e)e.classList.remove('sel');});
