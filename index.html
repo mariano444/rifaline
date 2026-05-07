@@ -47,6 +47,8 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
   .wrap{padding-bottom:100px}
   .notif-container{bottom:90px;left:15px;right:15px}
   .notif{width:100%}
+  .testi-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+  .testi-card{flex-shrink:0;min-width:220px;max-width:260px}
 }
 
 /* HERO SPOTLIGHT */
@@ -68,7 +70,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .aurora-blob:nth-child(3){width:500px;height:450px;bottom:-100px;left:15%;background:radial-gradient(circle,rgba(0,217,126,0.06) 0%,transparent 70%);animation-delay:-18s}
 @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(50px,-40px) scale(1.05)}66%{transform:translate(-40px,50px) scale(.96)}}
 
-.wrap{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:0 20px 120px}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 20px 88px}
 
 /* TOPBAR */
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:24px 0 0;flex-wrap:wrap;gap:12px}
@@ -117,9 +119,9 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .sl{font-size:11px;font-weight:800;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-top:6px}
 
 /* TESTIMONIOS RÁPIDOS */
-.testi-row{display:flex;gap:10px;margin:22px 0;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.testi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:22px 0;align-items:stretch}
 .testi-row::-webkit-scrollbar{display:none}
-.testi-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 18px;flex-shrink:0;min-width:220px;max-width:260px}
+.testi-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 18px;min-width:0;height:100%}
 .testi-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .testi-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
 .testi-name{font-size:12px;font-weight:700}
@@ -607,6 +609,42 @@ src="https://www.facebook.com/tr?id=675114246370648&ev=PageView&noscript=1"
       <div class="testi-stars">★★★★★</div>
       <div class="testi-text">"Muy transparente todo. Ves la lista de participantes en tiempo real, da mucha confianza."</div>
       <div class="testi-date">Sorteo #52 · Participando</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-top"><div class="testi-av">MG</div><div><div class="testi-name">Mariana Gómez</div><div class="testi-loc">La Plata, Buenos Aires</div><div class="testi-check">✓ Ganadora Verificada</div></div></div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Me pasaron el comprobante, validé el código y esa misma tarde ya tenía acreditado el premio."</div>
+      <div class="testi-date">Sorteo #44 · $1.800.000</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-top"><div class="testi-av">JP</div><div><div class="testi-name">Julián Paredes</div><div class="testi-loc">San Miguel de Tucumán</div><div class="testi-check">✓ Ganador Verificado</div></div></div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Pensé que era imposible hasta que vi mi número salir. Muy buena atención por WhatsApp y cero vueltas."</div>
+      <div class="testi-date">Sorteo #41 · $2.700.000</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-top"><div class="testi-av">AS</div><div><div class="testi-name">Antonella Suárez</div><div class="testi-loc">Salta Capital</div><div class="testi-check">✓ Participante Verificada</div></div></div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Lo mejor es que ves enseguida qué números siguen libres y el registro se hace rapidísimo."</div>
+      <div class="testi-date">Sorteo #53 · Participando</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-top"><div class="testi-av">NB</div><div><div class="testi-name">Nicolás Benítez</div><div class="testi-loc">Neuquén Capital</div><div class="testi-check">✓ Ganador Verificado</div></div></div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Elegí cinco números, me confirmaron todo al instante y terminé cobrando al día siguiente. Recomiendo."</div>
+      <div class="testi-date">Sorteo #39 · $4.200.000</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-top"><div class="testi-av">CR</div><div><div class="testi-name">Camila Ruiz</div><div class="testi-loc">Paraná, Entre Ríos</div><div class="testi-check">✓ Ganadora Verificada</div></div></div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Tenía dudas antes de entrar, pero cuando vi a los demás participantes y los ganadores anteriores me convencí."</div>
+      <div class="testi-date">Sorteo #46 · $2.300.000</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-top"><div class="testi-av">DT</div><div><div class="testi-name">Diego Torres</div><div class="testi-loc">CABA</div><div class="testi-check">✓ Participante Verificado</div></div></div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"El proceso de pago fue claro y el número quedó reservado al momento. Eso da mucha tranquilidad."</div>
+      <div class="testi-date">Sorteo #54 · Participando</div>
     </div>
   </div>
 
