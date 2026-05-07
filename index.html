@@ -577,7 +577,7 @@ src="https://www.facebook.com/tr?id=675114246370648&ev=PageView&noscript=1"
   </div>
 
   <!-- HERO -->
-  <div class="hero" data-reveal>
+  <div class="hero revealed" data-reveal>
     <div class="hero-label"><div class="label-dot"></div>🟢 SORTEO ACTIVO — GANÁ HOY MISMO</div>
     <div class="hero-eyebrow">PREMIO MAYOR GARANTIZADO</div>
     <div class="hero-title"><span class="l1">LLEVATE</span><span class="l2" id="heroPrize">$5.000.000</span></div>
@@ -1292,15 +1292,33 @@ function updateStats(){
 
 // SCROLL REVEAL
 function initReveal() {
+  const revealElements = document.querySelectorAll('[data-reveal]');
+  
+  // Si el navegador no soporta IntersectionObserver, mostrar todo de una
+  if (!window.IntersectionObserver) {
+    revealElements.forEach(el => el.classList.add('revealed'));
+    return;
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('revealed');
       }
     });
-  }, { threshold: 0.1 });
+  }, { 
+    threshold: 0.05, // Umbral más bajo para asegurar que se active rápido
+    rootMargin: '0px 0px -50px 0px' 
+  });
 
-  document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+  revealElements.forEach(el => {
+    // Si el elemento ya está visible o cerca de la parte superior, mostrarlo de inmediato
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      el.classList.add('revealed');
+    }
+    observer.observe(el);
+  });
 }
 
 // NOTIFICACIONES SIMULADAS
@@ -1334,7 +1352,7 @@ function showFakePurchase() {
 }
 
 // Iniciar al cargar
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
   initReveal();
   setTimeout(showFakePurchase, 4000);
 });
