@@ -31,7 +31,7 @@ let realList = [];
 let drawDone = false;
 let sorteoId = null;
 let pendingWinner = null;
-let currentPrize = 0;
+var currentPrize = 0;
 let currentSecretCode = '';
 let liveTimer = null;
 let syncTimer = null;
@@ -45,7 +45,7 @@ const takenSet = () => {
 };
 
 const fmt = (n) => (n < 10 ? `00${n}` : n < 100 ? `0${n}` : String(n));
-const fmtPrize = (n) => `$${Number(n || 0).toLocaleString('es-AR')}`;
+var fmtPrize = (n) => `$${Number(n || 0).toLocaleString('es-AR')}`;
 
 window.addEventListener('DOMContentLoaded', () => {
   const waUrl = (msg) => `https://wa.me/${WA_NUMBER}?text=${msg}`;
@@ -749,11 +749,42 @@ function launchConfetti() {
   })();
 }
 
+function showNotification(participant) {
+  const name = participant.nombre || participant.name;
+  const loc = participant.localidad || participant.loc;
+  const nums = Array.isArray(participant.numeros) ? participant.numeros : (participant.nums || []);
+  const qty = nums.length || 1;
+  const prizeStr = fmtPrize(currentPrize);
+
+  const container = document.getElementById('notifContainer');
+  if (!container) return;
+
+  const notif = document.createElement('div');
+  notif.className = 'notif';
+  notif.innerHTML = `
+    <div class="notif-av">${name[0].toUpperCase()}</div>
+    <div class="notif-txt">
+      <strong>${name}</strong> de ${loc}<br>
+      compró <strong>${qty} número${qty > 1 ? 's' : ''}</strong> por el premio de <strong>${prizeStr}</strong>
+    </div>
+  `;
+  container.appendChild(notif);
+
+  setTimeout(() => notif.classList.add('show'), 100);
+  setTimeout(() => {
+    notif.classList.remove('show');
+    setTimeout(() => notif.remove(), 500);
+  }, 5000);
+}
+
 function subscribeRealtime() {
   try {
     supabaseClient
       .channel('raffle-live')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'participantes' }, queueSync)
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'participantes' }, (payload) => {
+        showNotification(payload.new);
+        queueSync();
+      })
       .on('postgres_changes', { event: '*', schema: 'public', table: 'numeros_asignados' }, queueSync)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'ganadores' }, queueSync)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'sorteos' }, queueSync)
