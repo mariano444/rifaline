@@ -168,6 +168,8 @@ function applyRaffleState(payload) {
 
   document.getElementById('heroPrize').textContent = fmtPrize(currentPrize);
   document.getElementById('wPrize').textContent = fmtPrize(currentPrize);
+  const sbPrizeEl = document.getElementById('sbPrize');
+  if (sbPrizeEl) sbPrizeEl.textContent = fmtPrize(currentPrize);
 
   buildGrid();
   updateStats();
@@ -241,6 +243,8 @@ function updateStats() {
   document.getElementById('p-max').textContent = TOTAL;
   document.getElementById('sc-avail').textContent = avail;
   document.getElementById('ub-avail').textContent = `${avail} restantes`;
+  const sbPrizeEl = document.getElementById('sbPrize');
+  if (sbPrizeEl) sbPrizeEl.textContent = fmtPrize(currentPrize);
 
   const urgency =
     avail <= 5
