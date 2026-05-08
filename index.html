@@ -1164,6 +1164,8 @@ async function initSorteo(){
 
     document.getElementById('heroPrize').textContent=fmtPrize(currentPrize);
     document.getElementById('wPrize').textContent=fmtPrize(currentPrize);
+    const sbPrizeEl = document.getElementById('sbPrize');
+    if (sbPrizeEl) sbPrizeEl.textContent = fmtPrize(currentPrize);
     updateLastWinnerBanner();
     buildGrid(); updateStats(); renderParts(); updateSummary(); updateLiveCnt();
     await new Promise(r=>setTimeout(r,300));
@@ -1182,6 +1184,8 @@ async function initSorteo(){
   // Actualizar UI premio
   document.getElementById('heroPrize').textContent=fmtPrize(currentPrize);
   document.getElementById('wPrize').textContent=fmtPrize(currentPrize);
+  const sbPrizeEl2 = document.getElementById('sbPrize');
+  if (sbPrizeEl2) sbPrizeEl2.textContent = fmtPrize(currentPrize);
 
   // Slots reales: 20-40 números libres
   const realSlots=Math.floor(Math.random()*21)+20;
